@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TDM-Android</string>
+    <string name="select">Select size of items</string>
 </resources>
