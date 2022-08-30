@@ -7,13 +7,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class FilterActivity extends AppCompatActivity {
 
-    String[] items =  {"5","10","25","50","100"};
-    AutoCompleteTextView autoCompleteTxt;
-    ArrayAdapter<String> adapterItems;
+    private String[] items =  {"5","10","25","50","100"};
+    private AutoCompleteTextView autoCompleteTxt;
+    private ArrayAdapter<String> adapterItems;
+    private Button btnSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +27,20 @@ public class FilterActivity extends AppCompatActivity {
         adapterItems = new ArrayAdapter<String>(this,R.layout.list_item,items);
         autoCompleteTxt.setAdapter(adapterItems);
 
+        btnSubmit = findViewById(R.id.btn_filter);
+
         autoCompleteTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
                 Toast.makeText(getApplicationContext(),"Item: "+item,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Submit!", Toast.LENGTH_SHORT).show();
             }
         });
 
