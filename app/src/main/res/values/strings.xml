@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">TDM-Android</string>
     <string name="select">Select size of items</string>
+    <string name="chracter_name">Arya Stark</string>
+    <string name="chracter_gender">Famale</string>
+    <string name="chracter_description">
+        Princess Arya Stark is the third child and second daughter of Lord Eddard Stark
+        and his wife, Lady Catelyn Stark. She is the sister of the incumbent Westerosi monarchs,
+        Sansa, Queen in the North, and Brandon, King of the Andals and the First Men.
+    </string>
 </resources>

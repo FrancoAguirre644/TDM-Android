@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="170dp"
-    android:layout_height="170dp"
+    android:layout_height="180dp"
     app:cardCornerRadius="12dp"
     app:cardElevation="5dp"
     app:cardBackgroundColor="@color/gray"
@@ -16,17 +16,20 @@
         android:gravity="center"
         >
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/idea"
-            android:layout_marginTop="18dp"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/example_character"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000"/>
 
         <TextView
             android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Idea"
+            android:text="@string/chracter_name"
             android:fontFamily="@font/googlesans_bold"
             android:textSize="18sp"
             android:textColor="@color/white"
@@ -36,7 +39,7 @@
             android:id="@+id/cityTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Idea"
+            android:text="@string/chracter_gender"
             android:fontFamily="@font/googlesans_bold"
             android:textSize="18sp"
             android:textColor="@color/white"

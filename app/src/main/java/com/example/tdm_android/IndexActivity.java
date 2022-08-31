@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.tdm_android.adapters.CharacterAdapter;
 import com.example.tdm_android.models.Character;
@@ -14,9 +16,6 @@ import java.util.List;
 
 public class IndexActivity extends AppCompatActivity {
 
-    private RecyclerView rvCharacters;
-    private CharacterAdapter charactersAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,23 +24,33 @@ public class IndexActivity extends AppCompatActivity {
     }
 
     private void setupAdapter() {
-        rvCharacters = findViewById(R.id.listRecyclerView);
-        charactersAdapter = new CharacterAdapter(getCharacters());
+        RecyclerView rvCharacters = findViewById(R.id.listRecyclerView);
+
+        CharacterAdapter charactersAdapter = new CharacterAdapter(getCharacters(), new CharacterAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Character character) {
+                Intent intent = new Intent(IndexActivity.this, DetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
         rvCharacters.setLayoutManager(new GridLayoutManager(this, 2));
         rvCharacters.setAdapter(charactersAdapter);
     }
 
     private List<Character> getCharacters() {
-        List<Character> listUsers = new ArrayList<>();
-        listUsers.add(new Character("Franco", "Buenos Aires"));
-        listUsers.add(new Character("Sergio", "Buenos Aires"));
-        listUsers.add(new Character("Franco", "Buenos Aires"));
-        listUsers.add(new Character("Sergio", "Buenos Aires"));
-        listUsers.add(new Character("Franco", "Buenos Aires"));
-        listUsers.add(new Character("Sergio", "Buenos Aires"));
-        listUsers.add(new Character("Franco", "Buenos Aires"));
-        listUsers.add(new Character("Sergio", "Buenos Aires"));
+        List<Character> listCharacters = new ArrayList<>();
+        listCharacters.add(new Character("Arya Stark", "Northmen"));
+        listCharacters.add(new Character("Arya Stark", "Northmen"));
+        listCharacters.add(new Character("Arya Stark", "Northmen"));
+        listCharacters.add(new Character("Arya Stark", "Northmen"));
+        listCharacters.add(new Character("Arya Stark", "Northmen"));
+        listCharacters.add(new Character("Arya Stark", "Northmen"));
+        listCharacters.add(new Character("Arya Stark", "Northmen"));
+        listCharacters.add(new Character("Arya Stark", "Northmen"));
+        listCharacters.add(new Character("Arya Stark", "Northmen"));
+        listCharacters.add(new Character("Arya Stark", "Northmen"));
 
-        return listUsers;
+        return listCharacters;
     }
 }
