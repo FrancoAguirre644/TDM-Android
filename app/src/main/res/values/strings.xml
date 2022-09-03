@@ -10,14 +10,14 @@
     </string>
     <string name="txtSelect">Select</string>
     <string name="enterUsername">Enter Username</string>
-    <string name="enterPassword">Enter password</string>
-    <string name="checkRememberUser">Remember user</string>
+    <string name="enterPassword">Enter Password</string>
+    <string name="checkRememberMe">Remember me</string>
     <string name="btnCreateUser">Create user</string>
-    <string name="txtLogIn">Log In</string>
+    <string name="txtLogIn">Login</string>
     <string name="register">Register</string>
     <string name="cancel">Cancel</string>
     <string name="confirmPassword">Confirm Password</string>
-    <string name="enterEmail">Enter email</string>
-    <string name="txtDataToRegister">Data to register</string>
-
+    <string name="enterEmail">Enter Email</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="have_an_account">Have an Account?</string>
 </resources>

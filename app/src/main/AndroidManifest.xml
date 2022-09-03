@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TDMAndroid">
         <activity
-            android:name=".activities.CreateUserActivity"
+            android:name=".activities.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".activities.FilterActivity"

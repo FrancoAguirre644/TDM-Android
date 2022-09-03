@@ -7,13 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tdm_android.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button ntnCreateUser;
+    TextView tvCreateUser;
     Button btnLogin;
 
     @Override
@@ -26,10 +27,10 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Registered successfully " + strName + ", please login!!!", Toast.LENGTH_SHORT).show();
         }
 
-        ntnCreateUser = findViewById(R.id.createUser);
+        tvCreateUser = findViewById(R.id.createUser);
         btnLogin = findViewById(R.id.logIn);
 
-        ntnCreateUser.setOnClickListener(new View.OnClickListener() {
+        tvCreateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 redirectToCreateUser(view);
@@ -47,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void redirectToCreateUser(View view){
-        Intent intent = new Intent(this, CreateUserActivity.class);
+        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 

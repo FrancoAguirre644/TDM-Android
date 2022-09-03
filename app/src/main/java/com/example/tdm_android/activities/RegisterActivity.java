@@ -7,12 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tdm_android.R;
 
-public class CreateUserActivity extends AppCompatActivity {
-    Button ntnCancel;
+public class RegisterActivity extends AppCompatActivity {
+
     Button btnRegister;
 
     @Override
@@ -20,15 +21,7 @@ public class CreateUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_user);
 
-        ntnCancel = findViewById(R.id.cancel);
         btnRegister= findViewById(R.id.register);
-
-        ntnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cancelRegistration(view);
-            }
-        });
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override

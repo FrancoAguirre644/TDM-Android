@@ -27,6 +27,7 @@
         android:layout_margin="16dp"
         android:hint="@string/select"
         android:textColorHint="@color/white"
+        app:hintTextColor="@color/white"
         app:endIconTint="@color/white"
         app:boxBackgroundColor="@color/gray"
         app:boxStrokeWidth="0dp">
@@ -44,8 +45,9 @@
     <Button
         android:id="@+id/btn_filter"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="54dp"
         android:layout_marginHorizontal="16dp"
+        android:backgroundTint="@color/purple_700"
         android:text="@string/txtSelect" />
 
 </LinearLayout>
