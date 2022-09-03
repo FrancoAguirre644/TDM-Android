@@ -1,8 +1,10 @@
-package com.example.tdm_android;
+package com.example.tdm_android.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.tdm_android.R;
 
 public class DetailActivity extends AppCompatActivity {
 

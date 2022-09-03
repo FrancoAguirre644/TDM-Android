@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".DetailActivity">
+    tools:context=".activities.DetailActivity">
 
     <ImageView
         android:id="@+id/character_image"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
-        android:text="@string/chracter_gender"
+        android:text="@string/character_gender"
         android:textColor="@color/teal_700"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="@string/chracter_name"
+        android:text="@string/character_name"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/chracter_description"
+        android:text="@string/character_description"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,4 +1,4 @@
-package com.example.tdm_android;
+package com.example.tdm_android.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,17 +11,24 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.tdm_android.R;
+
 public class FilterActivity extends AppCompatActivity {
 
-    private String[] items =  {"5","10","25","50","100"};
-    private AutoCompleteTextView autoCompleteTxt;
-    private ArrayAdapter<String> adapterItems;
-    private Button btnSubmit;
+    String[] items =  {"5","10","25","50","100"};
+    AutoCompleteTextView autoCompleteTxt;
+    ArrayAdapter<String> adapterItems;
+    Button btnSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
+
+        String strName = getIntent().getStringExtra("name_user");
+        if(strName != null) { //Si se acaba de loguear
+            Toast.makeText(this, "Welcome " + strName + "!!!", Toast.LENGTH_SHORT).show();
+        }
 
         autoCompleteTxt = findViewById(R.id.auto_complete_txt);
 
