@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/black"
     tools:context=".activities.DetailActivity">
 
@@ -57,5 +58,89 @@
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/character_gender" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/firstDivider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/character_description"
+        app:dividerColor="@color/gray"
+        tools:ignore="MissingConstraints" />
+
+    <HorizontalScrollView
+        android:id="@+id/hsvTvSeries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/firstDivider"
+        tools:ignore="MissingConstraints">
+        <com.google.android.material.chip.ChipGroup
+            app:singleLine="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/gray"
+            tools:ignore="MissingConstraints">
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/white"
+                app:chipStrokeColor="@color/purple_200"
+                app:chipStrokeWidth="1dp"
+                android:text="Example!"/>
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/white"
+                app:chipStrokeColor="@color/purple_200"
+                app:chipStrokeWidth="1dp"
+                android:text="Example!"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/white"
+                app:chipStrokeColor="@color/purple_200"
+                app:chipStrokeWidth="1dp"
+                android:text="Example!"/>
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/white"
+                app:chipStrokeColor="@color/purple_200"
+                app:chipStrokeWidth="1dp"
+                android:text="Example!"/>
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/more_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="More details"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+        app:layout_constraintTop_toBottomOf="@+id/hsvTvSeries"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/secondDivider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/more_details"
+        app:dividerColor="@color/gray"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,14 +14,16 @@ import com.example.tdm_android.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    TextView tvLogin;
     Button btnRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_user);
+        setContentView(R.layout.activity_register);
 
         btnRegister= findViewById(R.id.register);
+        tvLogin= findViewById(R.id.tvLogin);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,11 +32,17 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        tvLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectToLogin(view);
+            }
+        });
+
     }
 
-    public void cancelRegistration(View view){
+    public void redirectToLogin(View view){
         Intent intent = new Intent(this, LoginActivity.class);
-        intent.putExtra("message", "Cancel registration");
         startActivity(intent);
     }
 
