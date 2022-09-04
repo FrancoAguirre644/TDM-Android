@@ -51,6 +51,7 @@
                 app:boxStrokeColor="@color/purple_700"
                 app:boxStrokeWidth="0dp">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtNameUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
