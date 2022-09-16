@@ -20,4 +20,7 @@
     <string name="enterEmail">Enter Email</string>
     <string name="dont_have_an_account">Don\'t have an account?</string>
     <string name="have_an_account">Have an Account?</string>
+    
+    <string name="menu_open">Open</string>
+    <string name="menu_close">Close</string>
 </resources>
