@@ -6,12 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toolbar;
 
 import com.example.tdm_android.R;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.Objects;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -41,20 +44,23 @@ public class DetailActivity extends AppCompatActivity {
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.menu_open, R.string.menu_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        navigationView.setNavigationItemSelectedListener(item -> {
 
-                switch (item.getItemId()) {
-                    case R.id.nav_home:
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-                }
-
-                return true;
+            switch (item.getItemId()) {
+                case R.id.nav_home:
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    Intent intent = new Intent(DetailActivity.this, FilterActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.nav_favourites:
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    Intent intent1 = new Intent(DetailActivity.this, FavouritesActivity.class);
+                    startActivity(intent1);
             }
+
+            return true;
         });
 
     }

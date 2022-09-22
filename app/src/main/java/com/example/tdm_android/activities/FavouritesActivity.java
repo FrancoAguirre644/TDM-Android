@@ -21,7 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IndexActivity extends AppCompatActivity {
+public class FavouritesActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -41,9 +41,7 @@ public class IndexActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_index);
-
-        setupAdapter();
+        setContentView(R.layout.activity_favourites);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
@@ -59,44 +57,39 @@ public class IndexActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         drawerLayout.closeDrawer(GravityCompat.START);
-                        Intent intent = new Intent(IndexActivity.this, FilterActivity.class);
+                        Intent intent = new Intent(FavouritesActivity.this, FilterActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.nav_favourites:
                         drawerLayout.closeDrawer(GravityCompat.START);
-                        Intent intent1 = new Intent(IndexActivity.this, FavouritesActivity.class);
+                        Intent intent1 = new Intent(FavouritesActivity.this, FavouritesActivity.class);
                         startActivity(intent1);
+                        break;
                 }
 
                 return true;
             }
         });
 
+        setupAdapter();
     }
 
     private void setupAdapter() {
+
         RecyclerView rvCharacters = findViewById(R.id.listRecyclerView);
 
-        CharacterAdapter charactersAdapter = new CharacterAdapter(getCharacters(), new CharacterAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Character character) {
-                Intent intent = new Intent(IndexActivity.this, DetailActivity.class);
-                startActivity(intent);
-            }
+        CharacterAdapter charactersAdapter = new CharacterAdapter(getCharacters(), character -> {
+            Intent intent = new Intent(FavouritesActivity.this, DetailActivity.class);
+            startActivity(intent);
         });
 
         rvCharacters.setLayoutManager(new GridLayoutManager(this, 2));
         rvCharacters.setAdapter(charactersAdapter);
     }
 
+
     private List<Character> getCharacters() {
         List<Character> listCharacters = new ArrayList<>();
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
         listCharacters.add(new Character("Arya Stark", "Northmen"));
         listCharacters.add(new Character("Arya Stark", "Northmen"));
         listCharacters.add(new Character("Arya Stark", "Northmen"));

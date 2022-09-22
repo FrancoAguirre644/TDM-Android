@@ -62,6 +62,13 @@ public class FilterActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         drawerLayout.closeDrawer(GravityCompat.START);
+                        Intent intent = new Intent(FilterActivity.this, FilterActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_favourites:
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        Intent intent1 = new Intent(FilterActivity.this, FavouritesActivity.class);
+                        startActivity(intent1);
                         break;
                 }
 
