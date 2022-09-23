@@ -19,14 +19,14 @@ public class RegisterActivity extends AppCompatActivity {
 
     TextView tvLogin;
     Button btnRegister;
+    EditText etUsername, etEmail, etPassword, etConfirmPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        btnRegister= findViewById(R.id.register);
-        tvLogin= findViewById(R.id.tvLogin);
+        initializeVariables();
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,41 +38,50 @@ public class RegisterActivity extends AppCompatActivity {
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                redirectToLogin(view);
+                redirectToLogin(view, null, false);
             }
         });
 
     }
 
-    public void redirectToLogin(View view){
+
+    public void redirectToLogin(View view, String strUsername, boolean sendUsername){
         Intent intent = new Intent(this, LoginActivity.class);
+        if(sendUsername){
+            intent.putExtra(Constants.STR_KEY_USERNAME, strUsername);
+        }
         startActivity(intent);
     }
 
     public void register(View view){
-        EditText etUsername = findViewById(R.id.txtNameUser);
-        EditText etEmail = findViewById(R.id.txtEmail);
-        EditText etPassword = findViewById(R.id.txtPassword);
-        EditText etConfirmPassword = findViewById(R.id.txtConfirmPassword);
-        if (etUsername.getText().toString().isEmpty() || etPassword.getText().toString().isEmpty() ||
-                etEmail.getText().toString().isEmpty() || etConfirmPassword.getText().toString().isEmpty()){
-            Toast.makeText(this, Constants.MESSAGE_COMPLETE_ALL_FIELD, Toast.LENGTH_SHORT).show();
+        String strUsername, strPassword, strEmail;
+        strUsername = etUsername.getText().toString();
+        strPassword = etPassword.getText().toString();
+        strEmail = etEmail.getText().toString();
+        if (isFieldsAreCorrect_or_returnsFalseAndMessage(strUsername, strPassword, strEmail)){
+            createUser(strUsername, strEmail, strPassword);
+            redirectToLogin(view, strUsername, true);
+        }
+    }
+
+    public boolean isFieldsAreCorrect_or_returnsFalseAndMessage(String strUsername, String strPassword, String strEmail){
+        boolean isFieldsCorrect = false;
+        if (strUsername.isEmpty() || strPassword.isEmpty() || strEmail.isEmpty() || etConfirmPassword.getText().toString().isEmpty()){
+            Toast.makeText(this, Constants.COMPLETE_ALL_FIELD_MESSAGE, Toast.LENGTH_SHORT).show();
         }else {
-            if ( !etPassword.getText().toString().equals(etConfirmPassword.getText().toString()) ) {
-                Toast.makeText(this, Constants.MESSAGE_PASSWORD_CONFIRMATION_ERROR, Toast.LENGTH_SHORT).show();
+            if ( !strPassword.equals(etConfirmPassword.getText().toString()) ) {
+                Toast.makeText(this, Constants.PASSWORD_CONFIRMATION_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
             }else{
-                if(isTheValueInTheFieldExists("username", etUsername.getText().toString())){
-                    Toast.makeText(this, Constants.MESSAGE_USERNAME_ALREADY_REGISTERED, Toast.LENGTH_SHORT).show();
-                } else if(isTheValueInTheFieldExists("email", etEmail.getText().toString())){
-                    Toast.makeText(this, Constants.MESSAGE_EMAIL_ALREADY_REGISTERED, Toast.LENGTH_SHORT).show();
+                if(isTheValueInTheFieldExists("username", strUsername)){
+                    Toast.makeText(this, Constants.USERNAME_ALREADY_REGISTERED_MESSAGE, Toast.LENGTH_SHORT).show();
+                } else if(isTheValueInTheFieldExists("email", strEmail)){
+                    Toast.makeText(this, Constants.EMAIL_ALREADY_REGISTERED_MESSAGE, Toast.LENGTH_SHORT).show();
                 } else {
-                    createUser(etUsername.getText().toString(), etEmail.getText().toString(), etPassword.getText().toString());
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    intent.putExtra("name_user", etUsername.getText().toString());
-                    startActivity(intent);
+                    isFieldsCorrect = true;
                 }
             }
         }
+        return isFieldsCorrect;
     }
 
     public void createUser(String strUsername, String strEmail, String strPassword) {
@@ -85,15 +94,25 @@ public class RegisterActivity extends AppCompatActivity {
 
     public boolean isTheValueInTheFieldExists(String nameField, String valueField){
         User user = null;
+        boolean isExistValue = false;
         try {
             user = UserManager.getInstance(RegisterActivity.this).getOneUserByField(nameField, valueField);
             if ( user != null) {
-                return true;
+                isExistValue = true;
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        return false;
+        return isExistValue;
+    }
+
+    private void initializeVariables() {
+        btnRegister= findViewById(R.id.register);
+        tvLogin= findViewById(R.id.tvLogin);
+        etUsername = findViewById(R.id.txtNameUser);
+        etEmail = findViewById(R.id.txtEmail);
+        etPassword = findViewById(R.id.txtPassword);
+        etConfirmPassword = findViewById(R.id.txtConfirmPassword);
     }
 
 }

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.tdm_android.R;
+import com.example.tdm_android.constants.Constants;
 import com.example.tdm_android.managers.UserManager;
 import com.example.tdm_android.models.User;
 import com.google.android.material.navigation.NavigationView;
@@ -21,6 +22,7 @@ import com.google.android.material.navigation.NavigationView;
 public class LoginActivity extends AppCompatActivity {
 
     TextView tvCreateUser;
+    EditText etUsername, etPassword;
     Button btnLogin;
 
     @Override
@@ -28,13 +30,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        String strName = getIntent().getStringExtra("name_user");
+        String strName = getIntent().getStringExtra(Constants.STR_KEY_USERNAME);
         if(strName != null) { //Si se acaba de registrar
-            Toast.makeText(this, "Registered successfully " + strName + ", please login!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, Constants.REGISTERED_SUCCESSFULLY_MESSAGE + strName, Toast.LENGTH_SHORT).show();
         }
-
-        tvCreateUser = findViewById(R.id.createUser);
-        btnLogin = findViewById(R.id.logIn);
+        
+        initializeVariables();
 
         tvCreateUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,18 +59,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void logIn(View view){
-        EditText etUsername = findViewById(R.id.txtNameUser);
-        EditText etPassword = findViewById(R.id.txtPassword);
         String strUsername = etUsername.getText().toString();
         String strPassword = etPassword.getText().toString();
         if ( strUsername.isEmpty() || strPassword.isEmpty()){
-            Toast.makeText(this, "You must complete all fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, Constants.COMPLETE_ALL_FIELD_MESSAGE, Toast.LENGTH_SHORT).show();
         }else if( isTheCredentialsAreValid(strUsername, strPassword) ){
             Intent intent = new Intent(this, FilterActivity.class);
-            intent.putExtra("name_user", etUsername.getText().toString());
+            intent.putExtra(Constants.STR_KEY_USERNAME, etUsername.getText().toString());
             startActivity(intent);
         }else{
-            Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, Constants.INVALID_CREDENTIALS_MESSAGE, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -81,6 +80,13 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return false;
+    }
+
+    private void initializeVariables() {
+        tvCreateUser = findViewById(R.id.createUser);
+        btnLogin = findViewById(R.id.logIn);
+        etUsername = findViewById(R.id.txtNameUser);
+        etPassword = findViewById(R.id.txtPassword);
     }
 
 }
