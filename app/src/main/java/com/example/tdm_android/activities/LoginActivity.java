@@ -14,6 +14,8 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.tdm_android.R;
+import com.example.tdm_android.managers.UserManager;
+import com.example.tdm_android.models.User;
 import com.google.android.material.navigation.NavigationView;
 
 public class LoginActivity extends AppCompatActivity {
@@ -58,11 +60,11 @@ public class LoginActivity extends AppCompatActivity {
     public void logIn(View view){
         EditText etUsername = findViewById(R.id.txtNameUser);
         EditText etPassword = findViewById(R.id.txtPassword);
-        String strName = etUsername.getText().toString();
+        String strUsername = etUsername.getText().toString();
         String strPassword = etPassword.getText().toString();
-        if ( strName.isEmpty() || strPassword.isEmpty()){
+        if ( strUsername.isEmpty() || strPassword.isEmpty()){
             Toast.makeText(this, "You must complete all fields", Toast.LENGTH_SHORT).show();
-        }else if( strPassword.equals("1234") && (strName.equals("Sergio") || strName.equals("Franco")) ){
+        }else if( isTheCredentialsAreValid(strUsername, strPassword) ){
             Intent intent = new Intent(this, FilterActivity.class);
             intent.putExtra("name_user", etUsername.getText().toString());
             startActivity(intent);
@@ -70,4 +72,15 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public boolean isTheCredentialsAreValid(String strUsername, String strPassword){
+        try {
+            User user = UserManager.getInstance(LoginActivity.this).getOneUserByField("username", strUsername);
+            if (user != null && user.getPassword().equals(strPassword)) {return true;}
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

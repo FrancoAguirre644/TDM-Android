@@ -3,6 +3,7 @@ package com.example.tdm_android.helpers;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.tdm_android.constants.Constants;
 import com.example.tdm_android.models.User;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -12,11 +13,8 @@ import java.sql.SQLException;
 
 public class DBHelper extends OrmLiteSqliteOpenHelper {
 
-    private static final String DB_NAME = "DB_TDM";
-    private static int DB_VERSION = 1;
-
     public DBHelper(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+        super(context, Constants.DB_NAME, null, Constants.DB_VERSION);
     }
 
     @Override

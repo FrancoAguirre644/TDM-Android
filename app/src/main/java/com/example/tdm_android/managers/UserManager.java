@@ -39,4 +39,12 @@ public class UserManager {
         return dao.queryForAll();
     }
 
+    public void createUser(User user) throws Exception {
+        dao.create(user);
+    }
+
+    public User getOneUserByField(String field, String username) throws Exception {
+        return dao.queryForEq(field, username).get(0);
+    }
+
 }
