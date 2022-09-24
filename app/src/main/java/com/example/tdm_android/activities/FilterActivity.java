@@ -70,6 +70,16 @@ public class FilterActivity extends AppCompatActivity {
                         Intent intent1 = new Intent(FilterActivity.this, FavouritesActivity.class);
                         startActivity(intent1);
                         break;
+                    case R.id.nav_profile:
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        Intent intent2 = new Intent(FilterActivity.this, ProfileActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_logout:
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        Intent intent3 = new Intent(FilterActivity.this, LoginActivity.class);
+                        startActivity(intent3);
+                        break;
                 }
 
                 return true;

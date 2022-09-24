@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -47,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                logIn(view);
+                login(view);
             }
         });
 
@@ -58,17 +59,37 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void logIn(View view){
+    public void login(View view){
+
         String strUsername = etUsername.getText().toString();
         String strPassword = etPassword.getText().toString();
+
+        final Dialog dialog = new Dialog(LoginActivity.this);
+        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setCancelable(false);
+
+        TextView tvDialogInfo = (TextView) dialog.findViewById(R.id.tvDialogInfo);
+        Button btnDialogOk = (Button) dialog.findViewById(R.id.btnDialogOk);
+
+        btnDialogOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
         if ( strUsername.isEmpty() || strPassword.isEmpty()){
-            Toast.makeText(this, Constants.COMPLETE_ALL_FIELD_MESSAGE, Toast.LENGTH_SHORT).show();
-        }else if( isTheCredentialsAreValid(strUsername, strPassword) ){
+            tvDialogInfo.setText(Constants.COMPLETE_ALL_FIELD_MESSAGE);
+            dialog.show();
+            //Toast.makeText(this, Constants.COMPLETE_ALL_FIELD_MESSAGE, Toast.LENGTH_SHORT).show();
+        }else if( isTheCredentialsAreValid(strUsername, strPassword) ) {
             Intent intent = new Intent(this, FilterActivity.class);
             intent.putExtra(Constants.STR_KEY_USERNAME, etUsername.getText().toString());
             startActivity(intent);
         }else{
-            Toast.makeText(this, Constants.INVALID_CREDENTIALS_MESSAGE, Toast.LENGTH_SHORT).show();
+            tvDialogInfo.setText(Constants.INVALID_CREDENTIALS_MESSAGE);
+            dialog.show();
+            //Toast.makeText(this, Constants.INVALID_CREDENTIALS_MESSAGE, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -84,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initializeVariables() {
         tvCreateUser = findViewById(R.id.createUser);
-        btnLogin = findViewById(R.id.logIn);
+        btnLogin = findViewById(R.id.login);
         etUsername = findViewById(R.id.txtNameUser);
         etPassword = findViewById(R.id.txtPassword);
     }

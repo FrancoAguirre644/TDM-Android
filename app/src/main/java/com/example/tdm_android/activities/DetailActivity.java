@@ -58,6 +58,16 @@ public class DetailActivity extends AppCompatActivity {
                     drawerLayout.closeDrawer(GravityCompat.START);
                     Intent intent1 = new Intent(DetailActivity.this, FavouritesActivity.class);
                     startActivity(intent1);
+                case R.id.nav_profile:
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    Intent intent2 = new Intent(DetailActivity.this, ProfileActivity.class);
+                    startActivity(intent2);
+                    break;
+                case R.id.nav_logout:
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    Intent intent3 = new Intent(DetailActivity.this, LoginActivity.class);
+                    startActivity(intent3);
+                    break;
             }
 
             return true;

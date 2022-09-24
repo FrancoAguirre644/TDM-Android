@@ -5,8 +5,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,14 +12,9 @@ import android.view.MenuItem;
 import android.widget.Toolbar;
 
 import com.example.tdm_android.R;
-import com.example.tdm_android.adapters.CharacterAdapter;
-import com.example.tdm_android.models.Character;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class IndexActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -41,9 +34,7 @@ public class IndexActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_index);
-
-        setupAdapter();
+        setContentView(R.layout.activity_profile);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
@@ -59,21 +50,22 @@ public class IndexActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         drawerLayout.closeDrawer(GravityCompat.START);
-                        Intent intent = new Intent(IndexActivity.this, FilterActivity.class);
+                        Intent intent = new Intent(ProfileActivity.this, FilterActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.nav_favourites:
                         drawerLayout.closeDrawer(GravityCompat.START);
-                        Intent intent1 = new Intent(IndexActivity.this, FavouritesActivity.class);
+                        Intent intent1 = new Intent(ProfileActivity.this, FavouritesActivity.class);
                         startActivity(intent1);
+                        break;
                     case R.id.nav_profile:
                         drawerLayout.closeDrawer(GravityCompat.START);
-                        Intent intent2 = new Intent(IndexActivity.this, ProfileActivity.class);
+                        Intent intent2 = new Intent(ProfileActivity.this, ProfileActivity.class);
                         startActivity(intent2);
                         break;
                     case R.id.nav_logout:
                         drawerLayout.closeDrawer(GravityCompat.START);
-                        Intent intent3 = new Intent(IndexActivity.this, LoginActivity.class);
+                        Intent intent3 = new Intent(ProfileActivity.this, LoginActivity.class);
                         startActivity(intent3);
                         break;
                 }
@@ -82,36 +74,7 @@ public class IndexActivity extends AppCompatActivity {
             }
         });
 
-    }
 
-    private void setupAdapter() {
-        RecyclerView rvCharacters = findViewById(R.id.listRecyclerView);
 
-        CharacterAdapter charactersAdapter = new CharacterAdapter(getCharacters(), new CharacterAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Character character) {
-                Intent intent = new Intent(IndexActivity.this, DetailActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        rvCharacters.setLayoutManager(new GridLayoutManager(this, 2));
-        rvCharacters.setAdapter(charactersAdapter);
-    }
-
-    private List<Character> getCharacters() {
-        List<Character> listCharacters = new ArrayList<>();
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
-        listCharacters.add(new Character("Arya Stark", "Northmen"));
-
-        return listCharacters;
     }
 }

@@ -2,6 +2,7 @@ package com.example.tdm_android.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -65,17 +66,40 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public boolean isFieldsAreCorrect_or_returnsFalseAndMessage(String strUsername, String strPassword, String strEmail){
+
+        final Dialog dialog = new Dialog(RegisterActivity.this);
+        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setCancelable(false);
+
+        TextView tvDialogInfo = (TextView) dialog.findViewById(R.id.tvDialogInfo);
+        Button btnDialogOk = (Button) dialog.findViewById(R.id.btnDialogOk);
+
+        btnDialogOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
         boolean isFieldsCorrect = false;
         if (strUsername.isEmpty() || strPassword.isEmpty() || strEmail.isEmpty() || etConfirmPassword.getText().toString().isEmpty()){
-            Toast.makeText(this, Constants.COMPLETE_ALL_FIELD_MESSAGE, Toast.LENGTH_SHORT).show();
+            tvDialogInfo.setText(Constants.COMPLETE_ALL_FIELD_MESSAGE);
+            dialog.show();
+            //Toast.makeText(this, Constants.COMPLETE_ALL_FIELD_MESSAGE, Toast.LENGTH_SHORT).show();
         }else {
             if ( !strPassword.equals(etConfirmPassword.getText().toString()) ) {
-                Toast.makeText(this, Constants.PASSWORD_CONFIRMATION_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
+                tvDialogInfo.setText(Constants.PASSWORD_CONFIRMATION_ERROR_MESSAGE);
+                dialog.show();
+                //Toast.makeText(this, Constants.PASSWORD_CONFIRMATION_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
             }else{
                 if(isTheValueInTheFieldExists("username", strUsername)){
-                    Toast.makeText(this, Constants.USERNAME_ALREADY_REGISTERED_MESSAGE, Toast.LENGTH_SHORT).show();
+                    tvDialogInfo.setText(Constants.USERNAME_ALREADY_REGISTERED_MESSAGE);
+                    dialog.show();
+                    //Toast.makeText(this, Constants.USERNAME_ALREADY_REGISTERED_MESSAGE, Toast.LENGTH_SHORT).show();
                 } else if(isTheValueInTheFieldExists("email", strEmail)){
-                    Toast.makeText(this, Constants.EMAIL_ALREADY_REGISTERED_MESSAGE, Toast.LENGTH_SHORT).show();
+                    tvDialogInfo.setText(Constants.EMAIL_ALREADY_REGISTERED_MESSAGE);
+                    dialog.show();
+                    //Toast.makeText(this, Constants.EMAIL_ALREADY_REGISTERED_MESSAGE, Toast.LENGTH_SHORT).show();
                 } else {
                     isFieldsCorrect = true;
                 }
