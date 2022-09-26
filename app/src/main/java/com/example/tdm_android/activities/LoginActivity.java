@@ -6,9 +6,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,9 @@ public class LoginActivity extends AppCompatActivity {
     TextView tvCreateUser;
     EditText etUsername, etPassword;
     Button btnLogin;
+    CheckBox checkRememberUser;
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,10 @@ public class LoginActivity extends AppCompatActivity {
         }
         
         initializeVariables();
+
+        if (this.pref.getBoolean(Constants.STR_CHECK_REMEMBER_USER, false)) {//Si había elgido recordar usuario
+            redirectToFilterActivity();
+        }
 
         tvCreateUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,9 +92,10 @@ public class LoginActivity extends AppCompatActivity {
             dialog.show();
             //Toast.makeText(this, Constants.COMPLETE_ALL_FIELD_MESSAGE, Toast.LENGTH_SHORT).show();
         }else if( isTheCredentialsAreValid(strUsername, strPassword) ) {
-            Intent intent = new Intent(this, FilterActivity.class);
-            intent.putExtra(Constants.STR_KEY_USERNAME, etUsername.getText().toString());
-            startActivity(intent);
+            if (checkRememberUser.isChecked()) {
+                saveDataUser();
+            }
+            redirectToFilterActivity();
         }else{
             tvDialogInfo.setText(Constants.INVALID_CREDENTIALS_MESSAGE);
             dialog.show();
@@ -93,6 +103,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void redirectToFilterActivity(){
+        Intent intent = new Intent(this, FilterActivity.class);
+        intent.putExtra(Constants.STR_KEY_USERNAME, etUsername.getText().toString());
+        startActivity(intent);
+    }
     public boolean isTheCredentialsAreValid(String strUsername, String strPassword){
         try {
             User user = UserManager.getInstance(LoginActivity.this).getOneUserByField("username", strUsername);
@@ -108,6 +123,14 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.login);
         etUsername = findViewById(R.id.txtNameUser);
         etPassword = findViewById(R.id.txtPassword);
+        checkRememberUser = findViewById(R.id.checkRememberUser);
+    }
+
+    public void saveDataUser(){
+        editor.putString(Constants.STR_USERNAME, etUsername.getText().toString());
+        editor.putString(Constants.STR_PASSWORD, etPassword.getText().toString());
+        editor.putBoolean(Constants.STR_CHECK_REMEMBER_USER, true);
+        editor.apply();
     }
 
 }

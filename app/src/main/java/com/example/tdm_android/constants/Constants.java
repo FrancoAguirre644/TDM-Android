@@ -11,5 +11,9 @@ public class Constants {
     public static final String STR_KEY_USERNAME = "key_username";
     public static final String INVALID_CREDENTIALS_MESSAGE = "Invalid credentials";
     public static final String REGISTERED_SUCCESSFULLY_MESSAGE = "Registered successfully, please login ";
+    public static final String STR_USERNAME = "USERNAME";
+    public static final String STR_PASSWORD = "PASSWORD";
+    public static final String STR_CHECK_REMEMBER_USER = "CHECK_REMEMBER_USER";
+    public static final String STR_EMPTY = "";
 
 }
