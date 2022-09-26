@@ -1,26 +1,23 @@
 package com.example.tdm_android.activities;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.tdm_android.R;
 import com.example.tdm_android.constants.Constants;
 import com.example.tdm_android.managers.UserManager;
 import com.example.tdm_android.models.User;
-import com.google.android.material.navigation.NavigationView;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,10 +37,10 @@ public class LoginActivity extends AppCompatActivity {
         if(strName != null) { //Si se acaba de registrar
             Toast.makeText(this, Constants.REGISTERED_SUCCESSFULLY_MESSAGE + strName, Toast.LENGTH_SHORT).show();
         }
-        
+
         initializeVariables();
 
-        if (this.pref.getBoolean(Constants.STR_CHECK_REMEMBER_USER, false)) {//Si había elgido recordar usuario
+        if (this.pref.getBoolean(Constants.STR_CHECK_REMEMBER_USER, false)) {//Si había elegido recordar usuario
             redirectToFilterActivity();
         }
 
@@ -124,6 +121,8 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.txtNameUser);
         etPassword = findViewById(R.id.txtPassword);
         checkRememberUser = findViewById(R.id.checkRememberUser);
+        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        editor = pref.edit();
     }
 
     public void saveDataUser(){

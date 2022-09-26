@@ -45,7 +45,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-
     public void redirectToLogin(View view, String strUsername, boolean sendUsername){
         Intent intent = new Intent(this, LoginActivity.class);
         if(sendUsername){
