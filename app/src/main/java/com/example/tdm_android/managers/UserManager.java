@@ -47,4 +47,8 @@ public class UserManager {
         return dao.queryForEq(field, username).get(0);
     }
 
+    public void updateUser(User user) throws Exception {
+        dao.update(user);
+    }
+
 }

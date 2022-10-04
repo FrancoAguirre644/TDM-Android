@@ -31,21 +31,21 @@
                 android:id="@id/tvUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Franco Aguirre"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/image_profile"
+                android:textColor="@color/white"
                 android:textSize="20sp"/>
 
             <TextView
-                android:id="@+id/tvFullname"
+                android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvUsername"
-                android:text="Franco Ezequiel Aguirre"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/image_profile"
+                android:textColor="@color/white"
                 android:textSize="14sp"/>
 
         </RelativeLayout>
@@ -68,6 +68,7 @@
                 android:hint="Username">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_baseline_supervised_user_circle_24"
@@ -89,9 +90,10 @@
                 android:hint="Email">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_baseline_supervised_user_circle_24"
+                    android:drawableStart="@drawable/ic_baseline_email_24"
                     android:drawablePadding="10dp"
                     app:boxBackgroundColor="@color/gray"
                     android:textColor="@color/white"
@@ -99,27 +101,14 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <Button
+                android:id="@+id/btnUpdateProfile"
+                android:width="140dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="54dp"
                 android:layout_marginBottom="10dp"
-                android:textColorHint="@color/white"
-                app:hintTextColor="@color/white"
-                app:endIconTint="@color/white"
-                app:boxBackgroundColor="@color/gray"
-                android:hint="Fullname">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_baseline_supervised_user_circle_24"
-                    android:drawablePadding="10dp"
-                    app:boxBackgroundColor="@color/gray"
-                    android:textColor="@color/white"
-                    android:text="Fullname"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
+                android:backgroundTint="@color/purple_700"
+                android:text="@string/update_profile" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/divider"

@@ -7,7 +7,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.tdm_android.R;
+import com.example.tdm_android.constants.Constants;
 import com.google.android.material.navigation.NavigationView;
 
 public class FilterActivity extends AppCompatActivity {
@@ -31,6 +34,9 @@ public class FilterActivity extends AppCompatActivity {
     NavigationView navigationView;
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerToggle;
+
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -77,6 +83,7 @@ public class FilterActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_logout:
                         drawerLayout.closeDrawer(GravityCompat.START);
+                        logoutUser();
                         Intent intent3 = new Intent(FilterActivity.this, LoginActivity.class);
                         startActivity(intent3);
                         break;
@@ -114,6 +121,17 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void logoutUser(){
+
+        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        editor = pref.edit();
+
+        editor.putString(Constants.STR_USERNAME, "");
+        editor.putString(Constants.STR_PASSWORD, "");
+        editor.putBoolean(Constants.STR_CHECK_REMEMBER_USER, false);
+        editor.apply();
     }
 
 }

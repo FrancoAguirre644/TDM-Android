@@ -84,21 +84,17 @@ public class RegisterActivity extends AppCompatActivity {
         if (strUsername.isEmpty() || strPassword.isEmpty() || strEmail.isEmpty() || etConfirmPassword.getText().toString().isEmpty()){
             tvDialogInfo.setText(Constants.COMPLETE_ALL_FIELD_MESSAGE);
             dialog.show();
-            //Toast.makeText(this, Constants.COMPLETE_ALL_FIELD_MESSAGE, Toast.LENGTH_SHORT).show();
         }else {
             if ( !strPassword.equals(etConfirmPassword.getText().toString()) ) {
                 tvDialogInfo.setText(Constants.PASSWORD_CONFIRMATION_ERROR_MESSAGE);
                 dialog.show();
-                //Toast.makeText(this, Constants.PASSWORD_CONFIRMATION_ERROR_MESSAGE, Toast.LENGTH_SHORT).show();
             }else{
                 if(isTheValueInTheFieldExists("username", strUsername)){
                     tvDialogInfo.setText(Constants.USERNAME_ALREADY_REGISTERED_MESSAGE);
                     dialog.show();
-                    //Toast.makeText(this, Constants.USERNAME_ALREADY_REGISTERED_MESSAGE, Toast.LENGTH_SHORT).show();
                 } else if(isTheValueInTheFieldExists("email", strEmail)){
                     tvDialogInfo.setText(Constants.EMAIL_ALREADY_REGISTERED_MESSAGE);
                     dialog.show();
-                    //Toast.makeText(this, Constants.EMAIL_ALREADY_REGISTERED_MESSAGE, Toast.LENGTH_SHORT).show();
                 } else {
                     isFieldsCorrect = true;
                 }

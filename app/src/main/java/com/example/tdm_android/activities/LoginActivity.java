@@ -87,16 +87,12 @@ public class LoginActivity extends AppCompatActivity {
         if ( strUsername.isEmpty() || strPassword.isEmpty()){
             tvDialogInfo.setText(Constants.COMPLETE_ALL_FIELD_MESSAGE);
             dialog.show();
-            //Toast.makeText(this, Constants.COMPLETE_ALL_FIELD_MESSAGE, Toast.LENGTH_SHORT).show();
         }else if( isTheCredentialsAreValid(strUsername, strPassword) ) {
-            if (checkRememberUser.isChecked()) {
-                saveDataUser();
-            }
+            saveDataUser(checkRememberUser.isChecked());
             redirectToFilterActivity();
         }else{
             tvDialogInfo.setText(Constants.INVALID_CREDENTIALS_MESSAGE);
             dialog.show();
-            //Toast.makeText(this, Constants.INVALID_CREDENTIALS_MESSAGE, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -125,10 +121,10 @@ public class LoginActivity extends AppCompatActivity {
         editor = pref.edit();
     }
 
-    public void saveDataUser(){
+    public void saveDataUser(boolean isRememberUser){
         editor.putString(Constants.STR_USERNAME, etUsername.getText().toString());
         editor.putString(Constants.STR_PASSWORD, etPassword.getText().toString());
-        editor.putBoolean(Constants.STR_CHECK_REMEMBER_USER, true);
+        editor.putBoolean(Constants.STR_CHECK_REMEMBER_USER, isRememberUser);
         editor.apply();
     }
 

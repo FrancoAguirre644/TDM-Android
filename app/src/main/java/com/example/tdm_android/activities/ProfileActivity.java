@@ -6,12 +6,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.example.tdm_android.R;
+import com.example.tdm_android.constants.Constants;
+import com.example.tdm_android.managers.UserManager;
+import com.example.tdm_android.models.User;
 import com.google.android.material.navigation.NavigationView;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -20,6 +30,18 @@ public class ProfileActivity extends AppCompatActivity {
     NavigationView navigationView;
     Toolbar toolbar;
     ActionBarDrawerToggle actionBarDrawerToggle;
+
+    TextView tvUsername;
+    TextView tvEmail;
+    EditText etUsername;
+    EditText etEmail;
+    EditText etFullname;
+    Button btnUpdateProfile;
+
+    User userDetails;
+
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -35,6 +57,15 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        initializeVariables();
+
+        btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateUser(userDetails);
+            }
+        });
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
@@ -74,7 +105,50 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    private void initializeVariables() {
+
+        tvUsername = (TextView) findViewById(R.id.tvUsername);
+        tvEmail = (TextView) findViewById(R.id.tvEmail);
+        etUsername = (EditText) findViewById(R.id.etUsername);
+        etEmail = (EditText) findViewById(R.id.etEmail);
+        etFullname = (EditText) findViewById(R.id.etUsername);
+        btnUpdateProfile = (Button) findViewById(R.id.btnUpdateProfile);
+        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        editor = pref.edit();
+
+        userDetails = getUserDetails(this.pref.getString(Constants.STR_USERNAME, Constants.STR_USERNAME));
+
+        tvUsername.setText(userDetails.getUsername());
+        tvEmail.setText(userDetails.getEmail());
+        etUsername.setText(userDetails.getUsername());
+        etEmail.setText(userDetails.getEmail());
+        etFullname.setText(userDetails.getUsername());
 
     }
+
+    public User getUserDetails(String strUsername){
+        try {
+            User user = UserManager.getInstance(ProfileActivity.this).getOneUserByField("username", strUsername);
+            return user;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void updateUser(User user){
+
+        userDetails.setUsername(String.valueOf(etUsername.getText()));
+        tvUsername.setText(String.valueOf(etUsername.getText()));
+        editor.putString(Constants.STR_USERNAME, etUsername.getText().toString());
+
+        try {
+            UserManager.getInstance(ProfileActivity.this).updateUser(user);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }
