@@ -12,17 +12,17 @@ import android.content.Intent
 import com.example.tdm_android.adapters.CharacterAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import android.view.MenuItem
-import android.widget.*
 import com.example.tdm_android.models.Character
 import java.util.ArrayList
 
 class FavouritesActivity : AppCompatActivity() {
+
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
-    var toolbar: Toolbar? = null
-    var actionBarDrawerToggle: ActionBarDrawerToggle? = null
+    lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (actionBarDrawerToggle!!.onOptionsItemSelected(item)) {
+        return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             true
         } else super.onOptionsItemSelected(item)
     }
@@ -30,14 +30,15 @@ class FavouritesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favourites)
+
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigationView)
-        actionBarDrawerToggle =
-            ActionBarDrawerToggle(this, drawerLayout, R.string.menu_open, R.string.menu_close)
-        drawerLayout.addDrawerListener(actionBarDrawerToggle!!)
-        actionBarDrawerToggle!!.syncState()
+        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.menu_open, R.string.menu_close)
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        navigationView.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
+
+        navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
                     drawerLayout.closeDrawer(GravityCompat.START)
@@ -61,7 +62,7 @@ class FavouritesActivity : AppCompatActivity() {
                 }
             }
             true
-        })
+        }
         setupAdapter()
     }
 
@@ -76,7 +77,7 @@ class FavouritesActivity : AppCompatActivity() {
     }
 
     private val characters: List<Character>
-        private get() {
+        get() {
             val listCharacters: MutableList<Character> = ArrayList()
             listCharacters.add(Character("Arya Stark", "Northmen"))
             listCharacters.add(Character("Arya Stark", "Northmen"))

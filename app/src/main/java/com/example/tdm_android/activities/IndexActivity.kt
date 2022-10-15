@@ -9,20 +9,24 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import android.content.Intent
+import android.util.Log
 import com.example.tdm_android.adapters.CharacterAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import android.view.MenuItem
-import android.widget.*
+import com.example.tdm_android.client.RetroFitClient
 import com.example.tdm_android.models.Character
-import java.util.ArrayList
+import com.example.tdm_android.services.GOTService
+import retrofit2.Call
+import retrofit2.Response
 
 class IndexActivity : AppCompatActivity() {
+
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
-    var toolbar: Toolbar? = null
-    var actionBarDrawerToggle: ActionBarDrawerToggle? = null
+    lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (actionBarDrawerToggle!!.onOptionsItemSelected(item)) {
+        return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             true
         } else super.onOptionsItemSelected(
             item
@@ -33,14 +37,15 @@ class IndexActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_index)
         setupAdapter()
+
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigationView)
-        actionBarDrawerToggle =
-            ActionBarDrawerToggle(this, drawerLayout, R.string.menu_open, R.string.menu_close)
-        drawerLayout.addDrawerListener(actionBarDrawerToggle!!)
-        actionBarDrawerToggle!!.syncState()
+        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.menu_open, R.string.menu_close)
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        navigationView.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
+
+        navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
                     drawerLayout.closeDrawer(GravityCompat.START)
@@ -67,32 +72,40 @@ class IndexActivity : AppCompatActivity() {
                 }
             }
             true
-        })
+        }
+
     }
 
     private fun setupAdapter() {
-        val rvCharacters = findViewById<RecyclerView>(R.id.listRecyclerView)
-        val charactersAdapter = CharacterAdapter(characters) {
-            val intent = Intent(this@IndexActivity, DetailActivity::class.java)
-            startActivity(intent)
-        }
-        rvCharacters.layoutManager = GridLayoutManager(this, 2)
-        rvCharacters.adapter = charactersAdapter
+
+        val api = RetroFitClient.retrofit.create(GOTService::class.java)
+
+        val pageSize = intent.getStringExtra("pageSize")!!
+
+        api.getCharacters(pageSize, "2").enqueue(object : retrofit2.Callback<List<Character>> {
+            override fun onResponse(call: Call<List<Character>>, response: Response<List<Character>>) {
+                val characters = response.body() as List<Character>
+
+                val rvCharacters = findViewById<RecyclerView>(R.id.listRecyclerView)
+
+                val charactersAdapter = CharacterAdapter(characters) { character ->
+                    Intent(this@IndexActivity, DetailActivity::class.java).also {
+                        it.putExtra("id", character.url)
+                        startActivity(it)
+                    }
+                }
+
+                rvCharacters.layoutManager = GridLayoutManager(applicationContext, 2)
+                rvCharacters.adapter = charactersAdapter
+
+            }
+
+            override fun onFailure(call: Call<List<Character>>, t: Throwable) {
+                Log.e("Error: ", t.message ?: " ")
+            }
+
+        })
+
     }
 
-    private val characters: List<Character>
-        private get() {
-            val listCharacters: MutableList<Character> = ArrayList()
-            listCharacters.add(Character("Arya Stark", "Northmen"))
-            listCharacters.add(Character("Arya Stark", "Northmen"))
-            listCharacters.add(Character("Arya Stark", "Northmen"))
-            listCharacters.add(Character("Arya Stark", "Northmen"))
-            listCharacters.add(Character("Arya Stark", "Northmen"))
-            listCharacters.add(Character("Arya Stark", "Northmen"))
-            listCharacters.add(Character("Arya Stark", "Northmen"))
-            listCharacters.add(Character("Arya Stark", "Northmen"))
-            listCharacters.add(Character("Arya Stark", "Northmen"))
-            listCharacters.add(Character("Arya Stark", "Northmen"))
-            return listCharacters
-        }
 }
