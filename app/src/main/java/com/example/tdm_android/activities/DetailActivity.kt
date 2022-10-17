@@ -14,6 +14,8 @@ import android.widget.*
 import com.example.tdm_android.client.RetroFitClient
 import com.example.tdm_android.models.Character
 import com.example.tdm_android.services.GOTService
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import retrofit2.Call
 import retrofit2.Response
 import java.util.*
@@ -22,6 +24,8 @@ class DetailActivity : AppCompatActivity() {
 
     lateinit var tvCharacterGender: TextView
     lateinit var tvCharacterName: TextView
+    lateinit var cgtvSeries: ChipGroup
+    lateinit var cgAliases: ChipGroup
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
@@ -44,20 +48,38 @@ class DetailActivity : AppCompatActivity() {
         actionBarDrawerToggle.syncState()
         Objects.requireNonNull(supportActionBar)?.setDisplayHomeAsUpEnabled(true)
 
-        tvCharacterGender = findViewById<TextView>(R.id.character_gender)
-        tvCharacterName = findViewById<TextView>(R.id.character_name)
+        tvCharacterGender = findViewById(R.id.character_gender)
+        tvCharacterName = findViewById(R.id.character_name)
+        cgtvSeries = findViewById(R.id.cgTvSeries)
+        cgAliases = findViewById(R.id.cgAliases)
 
-        val id = intent.getStringExtra("id")!!
-
-        Toast.makeText(this@DetailActivity, "Its a toast! $id", Toast.LENGTH_SHORT).show()
+        val idCharacter = intent.getStringExtra("id")!!
 
         val api = RetroFitClient.retrofit.create(GOTService::class.java)
 
-        api.getCharacter("583").enqueue(object : retrofit2.Callback<Character> {
+        api.getCharacter(idCharacter).enqueue(object : retrofit2.Callback<Character> {
             override fun onResponse(call: Call<Character>, response: Response<Character>) {
                 val character = response.body() as Character
+
                 tvCharacterGender.text = character.gender
-                tvCharacterName.text = character.name
+                tvCharacterName.text = character.name + " - " + character.culture
+
+                character.tvSeries.forEach { tvSerie ->
+                    if (tvSerie != "") {
+                        val chip = Chip(this@DetailActivity)
+                        chip.text = tvSerie
+                        cgtvSeries.addView(chip)
+                    }
+                }
+
+                character.aliases.forEach { alias ->
+                    if (alias != "") {
+                        val chip = Chip(this@DetailActivity)
+                        chip.text = alias
+                        cgAliases.addView(chip)
+                    }
+                }
+
                 Toast.makeText(this@DetailActivity, "Its a toast! $character", Toast.LENGTH_SHORT).show()
             }
 

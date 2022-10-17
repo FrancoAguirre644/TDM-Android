@@ -90,7 +90,7 @@ class IndexActivity : AppCompatActivity() {
 
                 val charactersAdapter = CharacterAdapter(characters) { character ->
                     Intent(this@IndexActivity, DetailActivity::class.java).also {
-                        it.putExtra("id", character.url)
+                        it.putExtra("id", character.url?.filter { it -> it.isDigit() })
                         startActivity(it)
                     }
                 }

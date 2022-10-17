@@ -46,7 +46,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/image_profile"
                 android:textColor="@color/white"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                android:focusable="false" />
 
         </RelativeLayout>
 
@@ -97,7 +98,11 @@
                     android:drawablePadding="10dp"
                     app:boxBackgroundColor="@color/gray"
                     android:textColor="@color/white"
-                    android:text="Email@gmail.com"/>
+                    android:text="Email@gmail.com"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:inputType="none"
+                    android:cursorVisible="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
