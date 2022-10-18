@@ -11,12 +11,17 @@ import android.content.Intent
 import android.util.Log
 import android.view.MenuItem
 import android.widget.*
+import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.client.RetroFitClient
 import com.example.tdm_android.models.Character
 import com.example.tdm_android.services.GOTService
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
@@ -53,41 +58,9 @@ class DetailActivity : AppCompatActivity() {
         cgtvSeries = findViewById(R.id.cgTvSeries)
         cgAliases = findViewById(R.id.cgAliases)
 
-        val idCharacter = intent.getStringExtra("id")!!
+        Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 61, DetailActivity)")
 
-        val api = RetroFitClient.retrofit.create(GOTService::class.java)
-
-        api.getCharacter(idCharacter).enqueue(object : retrofit2.Callback<Character> {
-            override fun onResponse(call: Call<Character>, response: Response<Character>) {
-                val character = response.body() as Character
-
-                tvCharacterGender.text = character.gender
-                tvCharacterName.text = character.name + " - " + character.culture
-
-                character.tvSeries.forEach { tvSerie ->
-                    if (tvSerie != "") {
-                        val chip = Chip(this@DetailActivity)
-                        chip.text = tvSerie
-                        cgtvSeries.addView(chip)
-                    }
-                }
-
-                character.aliases.forEach { alias ->
-                    if (alias != "") {
-                        val chip = Chip(this@DetailActivity)
-                        chip.text = alias
-                        cgAliases.addView(chip)
-                    }
-                }
-
-                Toast.makeText(this@DetailActivity, "Its a toast! $character", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onFailure(call: Call<Character>, t: Throwable) {
-                Log.e("Error: ", t.message ?: " ")
-            }
-
-        })
+        restApiConsumption()
 
         navigationView.setNavigationItemSelectedListener { item: MenuItem ->
             when (item.itemId) {
@@ -118,4 +91,49 @@ class DetailActivity : AppCompatActivity() {
             true
         }
     }
+
+    private fun restApiConsumption() {
+        lifecycleScope.launch(Dispatchers.IO) {
+
+            Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 98, DetailActivity)")
+
+            val idCharacter = intent.getStringExtra("id")!!
+
+            val api = RetroFitClient.retrofit.create(GOTService::class.java)
+
+            api.getCharacter(idCharacter).enqueue(object : Callback<Character> {
+                override fun onResponse(call: Call<Character>, response: Response<Character>) {
+                    val character = response.body() as Character
+
+                    tvCharacterGender.text = character.gender
+                    tvCharacterName.text = character.name + " - " + character.culture
+
+                    character.tvSeries.forEach { tvSerie ->
+                        if (tvSerie != "") {
+                            val chip = Chip(this@DetailActivity)
+                            chip.text = tvSerie
+                            cgtvSeries.addView(chip)
+                        }
+                    }
+
+                    character.aliases.forEach { alias ->
+                        if (alias != "") {
+                            val chip = Chip(this@DetailActivity)
+                            chip.text = alias
+                            cgAliases.addView(chip)
+                        }
+                    }
+
+                    Toast.makeText(this@DetailActivity, "Its a toast! $character", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                override fun onFailure(call: Call<Character>, t: Throwable) {
+                    Log.e("Error: ", t.message ?: " ")
+                }
+
+            })
+        }
+    }
+
 }

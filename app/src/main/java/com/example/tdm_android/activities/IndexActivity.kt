@@ -13,9 +13,13 @@ import android.util.Log
 import com.example.tdm_android.adapters.CharacterAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import android.view.MenuItem
+import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.client.RetroFitClient
 import com.example.tdm_android.models.Character
 import com.example.tdm_android.services.GOTService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Response
 
@@ -77,35 +81,42 @@ class IndexActivity : AppCompatActivity() {
     }
 
     private fun setupAdapter() {
+        lifecycleScope.launch {
 
-        val api = RetroFitClient.retrofit.create(GOTService::class.java)
+            Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 86, IndexActivity)")
 
-        val pageSize = intent.getStringExtra("pageSize")!!
+            withContext(Dispatchers.IO){
+                val api = RetroFitClient.retrofit.create(GOTService::class.java)
 
-        api.getCharacters(pageSize, "2").enqueue(object : retrofit2.Callback<List<Character>> {
-            override fun onResponse(call: Call<List<Character>>, response: Response<List<Character>>) {
-                val characters = response.body() as List<Character>
+                Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 91, IndexActivity)")
 
-                val rvCharacters = findViewById<RecyclerView>(R.id.listRecyclerView)
+                val pageSize = intent.getStringExtra("pageSize")!!
 
-                val charactersAdapter = CharacterAdapter(characters) { character ->
-                    Intent(this@IndexActivity, DetailActivity::class.java).also {
-                        it.putExtra("id", character.url?.filter { it -> it.isDigit() })
-                        startActivity(it)
+                api.getCharacters(pageSize, "2").enqueue(object : retrofit2.Callback<List<Character>> {
+                    override fun onResponse(call: Call<List<Character>>, response: Response<List<Character>>) {
+                        val characters = response.body() as List<Character>
+
+                        val rvCharacters = findViewById<RecyclerView>(R.id.listRecyclerView)
+
+                        val charactersAdapter = CharacterAdapter(characters) { character ->
+                            Intent(this@IndexActivity, DetailActivity::class.java).also {
+                                it.putExtra("id", character.url?.filter { it -> it.isDigit() })
+                                startActivity(it)
+                            }
+                        }
+
+                        rvCharacters.layoutManager = GridLayoutManager(applicationContext, 2)
+                        rvCharacters.adapter = charactersAdapter
+
                     }
-                }
 
-                rvCharacters.layoutManager = GridLayoutManager(applicationContext, 2)
-                rvCharacters.adapter = charactersAdapter
+                    override fun onFailure(call: Call<List<Character>>, t: Throwable) {
+                        Log.e("Error: ", t.message ?: " ")
+                    }
 
+                })
             }
-
-            override fun onFailure(call: Call<List<Character>>, t: Throwable) {
-                Log.e("Error: ", t.message ?: " ")
-            }
-
-        })
-
+        }
     }
 
 }
