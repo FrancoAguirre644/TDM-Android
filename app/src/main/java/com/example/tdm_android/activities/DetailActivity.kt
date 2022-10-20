@@ -13,10 +13,13 @@ import android.view.MenuItem
 import android.widget.*
 import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.client.RetroFitClient
+import com.example.tdm_android.models.Answer
 import com.example.tdm_android.models.Character
 import com.example.tdm_android.services.GOTService
+import com.example.tdm_android.services.YesNoService
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,6 +32,7 @@ class DetailActivity : AppCompatActivity() {
 
     lateinit var tvCharacterGender: TextView
     lateinit var tvCharacterName: TextView
+    lateinit var ivImagen: ImageView
     lateinit var cgtvSeries: ChipGroup
     lateinit var cgAliases: ChipGroup
 
@@ -99,9 +103,11 @@ class DetailActivity : AppCompatActivity() {
 
             val idCharacter = intent.getStringExtra("id")!!
 
-            val api = RetroFitClient.retrofit.create(GOTService::class.java)
+            val apiGOT = RetroFitClient.retrofit.create(GOTService::class.java)
 
-            api.getCharacter(idCharacter).enqueue(object : Callback<Character> {
+            val apiYesNo = RetroFitClient.retrofit.create(YesNoService::class.java)
+
+            apiGOT.getCharacter(idCharacter).enqueue(object : Callback<Character> {
                 override fun onResponse(call: Call<Character>, response: Response<Character>) {
                     val character = response.body() as Character
 
@@ -124,8 +130,7 @@ class DetailActivity : AppCompatActivity() {
                         }
                     }
 
-                    Toast.makeText(this@DetailActivity, "Its a toast! $character", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(this@DetailActivity, "Its a toast! $character", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onFailure(call: Call<Character>, t: Throwable) {
@@ -133,6 +138,26 @@ class DetailActivity : AppCompatActivity() {
                 }
 
             })
+
+            apiYesNo.getAnswer().enqueue(object : Callback<Answer> {
+
+                override fun onResponse(call: Call<Answer>, response: Response<Answer>) {
+                    val answer = response.body() as Answer
+
+                    ivImagen = findViewById(R.id.character_image)
+                    Picasso.get().load(answer.image).into(ivImagen)
+
+                    Toast.makeText(this@DetailActivity, "Its a toast! $answer", Toast.LENGTH_SHORT)
+                        .show()
+
+                }
+
+                override fun onFailure(call: Call<Answer>, t: Throwable) {
+                    Log.e("Error: ", t.message ?: " ")
+                }
+
+            })
+
         }
     }
 
