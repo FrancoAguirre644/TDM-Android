@@ -12,7 +12,9 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.view.MenuItem
 import android.widget.*
+import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.constants.Constants
+import com.example.tdm_android.functions.restApiYesNoConsumptionLogout
 
 class FilterActivity : AppCompatActivity() {
 
@@ -67,8 +69,7 @@ class FilterActivity : AppCompatActivity() {
                 R.id.nav_logout -> {
                     drawerLayout.closeDrawer(GravityCompat.START)
                     logoutUser()
-                    val intent3 = Intent(this@FilterActivity, LoginActivity::class.java)
-                    startActivity(intent3)
+                    restApiYesNoConsumptionLogout(lifecycleScope, true)
                 }
             }
             true
