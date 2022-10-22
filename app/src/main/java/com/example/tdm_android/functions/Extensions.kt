@@ -2,23 +2,36 @@ package com.example.tdm_android.functions
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
+import android.preference.PreferenceManager
 import android.util.Log
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.example.tdm_android.R
+import com.example.tdm_android.activities.FavouritesActivity
+import com.example.tdm_android.activities.FilterActivity
+import com.example.tdm_android.activities.LoginActivity
+import com.example.tdm_android.activities.ProfileActivity
 import com.example.tdm_android.activities.*
 import com.example.tdm_android.client.RetroFitClient
 import com.example.tdm_android.constants.Constants
 import com.example.tdm_android.models.Answer
 import com.example.tdm_android.services.YesNoService
+import com.google.android.material.navigation.NavigationView
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 fun Context.messageShort(texto: String){ //A partir del context, es decir, se puede llamar desde cualquier lado
     Toast.makeText(this, texto, Toast.LENGTH_SHORT).show()
@@ -100,6 +113,48 @@ fun Context.restApiYesNoConsumptionLogout(lifecycleScope: LifecycleCoroutineScop
         })
 
     }
+}
+
+fun Context.triggerByChoosingNavigationMenuItem(lifecycleScope: LifecycleCoroutineScope, navigationView: NavigationView, drawerLayout: DrawerLayout, origin: String="Parameter optional if the origin is not DetailActivity or IndexActivity") {
+
+    navigationView.setNavigationItemSelectedListener { item: MenuItem ->
+        when (item.itemId) {
+            R.id.nav_home -> {
+                drawerLayout.closeDrawer(GravityCompat.START)
+                val intent = Intent(this, FilterActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_favourites -> {
+                drawerLayout.closeDrawer(GravityCompat.START)
+                val intent1 = Intent(this, FavouritesActivity::class.java)
+                startActivity(intent1)
+                if (origin == Constants.STR_ORIGIN_DETAIL || origin == Constants.STR_ORIGIN_INDEX){
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    val intent2 = Intent(this, ProfileActivity::class.java)
+                    startActivity(intent2)
+                }
+            }
+            R.id.nav_profile -> {
+                drawerLayout.closeDrawer(GravityCompat.START)
+                val intent = Intent(this, ProfileActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_logout -> {
+                logoutUser()
+                restApiYesNoConsumptionLogout(lifecycleScope, true)
+            }
+        }
+        true
+    }
+}
+
+fun Context.logoutUser() {
+    val pref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+    val editor: SharedPreferences.Editor = pref.edit()
+    editor.putString(Constants.STR_USERNAME, "")
+    editor.putString(Constants.STR_PASSWORD, "")
+    editor.putBoolean(Constants.STR_CHECK_REMEMBER_USER, false)
+    editor.apply()
 }
 
 //Función en una línea que, como es a partir del context, se puede usar desde cualquier lado

@@ -85,35 +85,7 @@ class LoginActivity : AppCompatActivity() {
             dialog.show()
         }
     }
-/*
-    private fun restApiYesNoConsumption_no(showGif: Boolean) {
-        lifecycleScope.launch(Dispatchers.IO) {
 
-            Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 83, LoginActivity)")
-
-            val apiYesNo = RetroFitClient.retrofit.create(YesNoService::class.java)
-
-            apiYesNo.getAnswer().enqueue(object : Callback<Answer>{
-
-                override fun onResponse(call: Call<Answer>, response: Response<Answer>) {
-                    val answer = response.body() as Answer
-                    messageShort("Its a toast yes/no = ${answer.answer}")
-                    if (answer.answer.equals("yes")){
-                        showImageRestApiYesNo(answer.answer.toString(), answer.image.toString(), imagePrincipal, showGif)
-                    } else {
-                        redirectToSplashScreenActivity(answer, "Login", showGif)
-                    }
-                }
-
-                override fun onFailure(call: Call<Answer>, t: Throwable) {
-                    Log.e("Error: ", t.message ?: " ")
-                }
-
-            })
-
-        }
-    }
-*/
     private fun redirectToFilterActivity() {
         val intent = Intent(this, FilterActivity::class.java)
         intent.putExtra(Constants.STR_KEY_USERNAME, etUsername.text.toString())

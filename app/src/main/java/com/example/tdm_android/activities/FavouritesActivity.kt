@@ -12,6 +12,9 @@ import android.content.Intent
 import com.example.tdm_android.adapters.CharacterAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import android.view.MenuItem
+import androidx.lifecycle.lifecycleScope
+import com.example.tdm_android.constants.Constants
+import com.example.tdm_android.functions.triggerByChoosingNavigationMenuItem
 import com.example.tdm_android.models.Character
 import java.util.ArrayList
 
@@ -38,31 +41,8 @@ class FavouritesActivity : AppCompatActivity() {
         actionBarDrawerToggle.syncState()
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        navigationView.setNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent = Intent(this@FavouritesActivity, FilterActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.nav_favourites -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent1 = Intent(this@FavouritesActivity, FavouritesActivity::class.java)
-                    startActivity(intent1)
-                }
-                R.id.nav_profile -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent2 = Intent(this@FavouritesActivity, ProfileActivity::class.java)
-                    startActivity(intent2)
-                }
-                R.id.nav_logout -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent3 = Intent(this@FavouritesActivity, LoginActivity::class.java)
-                    startActivity(intent3)
-                }
-            }
-            true
-        }
+        triggerByChoosingNavigationMenuItem(lifecycleScope, navigationView, drawerLayout)
+
         setupAdapter()
     }
 

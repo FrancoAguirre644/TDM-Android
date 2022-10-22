@@ -14,7 +14,9 @@ import android.preference.PreferenceManager
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.constants.Constants
+import com.example.tdm_android.functions.triggerByChoosingNavigationMenuItem
 import com.example.tdm_android.managers.UserManager
 import com.example.tdm_android.models.User
 import java.lang.Exception
@@ -58,31 +60,7 @@ class ProfileActivity : AppCompatActivity() {
         actionBarDrawerToggle.syncState()
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        navigationView.setNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent = Intent(this@ProfileActivity, FilterActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.nav_favourites -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent1 = Intent(this@ProfileActivity, FavouritesActivity::class.java)
-                    startActivity(intent1)
-                }
-                R.id.nav_profile -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent2 = Intent(this@ProfileActivity, ProfileActivity::class.java)
-                    startActivity(intent2)
-                }
-                R.id.nav_logout -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent3 = Intent(this@ProfileActivity, LoginActivity::class.java)
-                    startActivity(intent3)
-                }
-            }
-            true
-        }
+        triggerByChoosingNavigationMenuItem(lifecycleScope, navigationView, drawerLayout)
 
         btnLogout.setOnClickListener {
             logoutUser()

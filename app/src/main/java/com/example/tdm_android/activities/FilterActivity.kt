@@ -14,7 +14,7 @@ import android.view.MenuItem
 import android.widget.*
 import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.constants.Constants
-import com.example.tdm_android.functions.restApiYesNoConsumptionLogout
+import com.example.tdm_android.functions.triggerByChoosingNavigationMenuItem
 
 class FilterActivity : AppCompatActivity() {
 
@@ -49,31 +49,7 @@ class FilterActivity : AppCompatActivity() {
         actionBarDrawerToggle.syncState()
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        navigationView.setNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent = Intent(this@FilterActivity, FilterActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.nav_favourites -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent1 = Intent(this@FilterActivity, FavouritesActivity::class.java)
-                    startActivity(intent1)
-                }
-                R.id.nav_profile -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent2 = Intent(this@FilterActivity, ProfileActivity::class.java)
-                    startActivity(intent2)
-                }
-                R.id.nav_logout -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    logoutUser()
-                    restApiYesNoConsumptionLogout(lifecycleScope, true)
-                }
-            }
-            true
-        }
+        triggerByChoosingNavigationMenuItem(lifecycleScope, navigationView, drawerLayout)
 
         val strName = intent.getStringExtra("name_user")
 

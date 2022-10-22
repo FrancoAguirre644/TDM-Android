@@ -64,5 +64,6 @@ object Constants {
     const val IMAGE_STR = "image"
     const val ANSWER_STR = "answer"
     const val SHOW_GIF_STR = "show_gif"
-
+    const val STR_ORIGIN_DETAIL = "DetailActivity"
+    const val STR_ORIGIN_INDEX = "IndexActivity"
 }

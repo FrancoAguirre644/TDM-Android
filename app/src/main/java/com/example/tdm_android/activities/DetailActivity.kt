@@ -13,6 +13,8 @@ import android.view.MenuItem
 import android.widget.*
 import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.client.RetroFitClient
+import com.example.tdm_android.constants.Constants
+import com.example.tdm_android.functions.triggerByChoosingNavigationMenuItem
 import com.example.tdm_android.models.Answer
 import com.example.tdm_android.models.Character
 import com.example.tdm_android.services.GOTService
@@ -62,44 +64,17 @@ class DetailActivity : AppCompatActivity() {
         cgtvSeries = findViewById(R.id.cgTvSeries)
         cgAliases = findViewById(R.id.cgAliases)
 
-        Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 61, DetailActivity)")
+        Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 67, DetailActivity)")
 
         restApiConsumption()
 
-        navigationView.setNavigationItemSelectedListener { item: MenuItem ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent = Intent(this@DetailActivity, FilterActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.nav_favourites -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent1 = Intent(this@DetailActivity, FavouritesActivity::class.java)
-                    startActivity(intent1)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent2 = Intent(this@DetailActivity, ProfileActivity::class.java)
-                    startActivity(intent2)
-                }
-                R.id.nav_profile -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent2 = Intent(this@DetailActivity, ProfileActivity::class.java)
-                    startActivity(intent2)
-                }
-                R.id.nav_logout -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent3 = Intent(this@DetailActivity, LoginActivity::class.java)
-                    startActivity(intent3)
-                }
-            }
-            true
-        }
+        triggerByChoosingNavigationMenuItem(lifecycleScope, navigationView, drawerLayout, Constants.STR_ORIGIN_DETAIL)
     }
 
     private fun restApiConsumption() {
         lifecycleScope.launch(Dispatchers.IO) {
 
-            Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 98, DetailActivity)")
+            Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 77, DetailActivity)")
 
             val idCharacter = intent.getStringExtra("id")!!
 
