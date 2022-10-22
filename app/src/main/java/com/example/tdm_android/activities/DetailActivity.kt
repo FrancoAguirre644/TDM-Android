@@ -105,8 +105,6 @@ class DetailActivity : AppCompatActivity() {
 
             val apiGOT = RetroFitClient.retrofit.create(GOTService::class.java)
 
-            val apiYesNo = RetroFitClient.retrofit.create(YesNoService::class.java)
-
             apiGOT.getCharacter(idCharacter).enqueue(object : Callback<Character> {
                 override fun onResponse(call: Call<Character>, response: Response<Character>) {
                     val character = response.body() as Character
@@ -134,25 +132,6 @@ class DetailActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<Character>, t: Throwable) {
-                    Log.e("Error: ", t.message ?: " ")
-                }
-
-            })
-
-            apiYesNo.getAnswer().enqueue(object : Callback<Answer> {
-
-                override fun onResponse(call: Call<Answer>, response: Response<Answer>) {
-                    val answer = response.body() as Answer
-
-                    ivImagen = findViewById(R.id.character_image)
-                    Picasso.get().load(answer.image).into(ivImagen)
-
-                    Toast.makeText(this@DetailActivity, "Its a toast! $answer", Toast.LENGTH_SHORT)
-                        .show()
-
-                }
-
-                override fun onFailure(call: Call<Answer>, t: Throwable) {
                     Log.e("Error: ", t.message ?: " ")
                 }
 
