@@ -42,18 +42,13 @@ class LoginActivity : AppCompatActivity() {
 
         initializeVariables()
 
-        val origin = intent.getStringExtra("origin")
-        if (origin == null){ //Solo cuando ingresa
-            restApiYesNoConsumptionLogin(lifecycleScope, imagePrincipal, true)
-        }
-
-
-        if (pref.getBoolean(
-                Constants.STR_CHECK_REMEMBER_USER,
-                false
-            )
-        ) { //Si había elegido recordar usuario
+        if ( pref.getBoolean(Constants.STR_CHECK_REMEMBER_USER, false) ) { //Si había elegido recordar usuario
             redirectToFilterActivity()
+        } else{
+            val origin = intent.getStringExtra("origin")
+            if (origin == null){ //Solo cuando ingresa
+                restApiYesNoConsumptionLogin(lifecycleScope, imagePrincipal, true)
+            }
         }
         tvCreateUser.setOnClickListener { redirectToCreateUser() }
         btnLogin.setOnClickListener { login() }
