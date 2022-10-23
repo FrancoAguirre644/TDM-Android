@@ -9,12 +9,14 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.view.View
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.constants.Constants
 import com.example.tdm_android.managers.UserManager
 import com.example.tdm_android.models.User
 import java.lang.Exception
 import com.example.tdm_android.functions.restApiYesNoConsumptionLogin
+import com.example.tdm_android.notificatios.ServiceNotifications
 
 class LoginActivity : AppCompatActivity() {
 
@@ -121,5 +123,12 @@ class LoginActivity : AppCompatActivity() {
         editor.putString(Constants.STR_PASSWORD, etPassword.text.toString())
         editor.putBoolean(Constants.STR_CHECK_REMEMBER_USER, isRememberUser)
         editor.apply()
+        createNotification()
     }
+
+    private fun createNotification(){
+        val intent = Intent(this, ServiceNotifications::class.java)
+        ContextCompat.startForegroundService(this, intent)
+    }
+
 }
