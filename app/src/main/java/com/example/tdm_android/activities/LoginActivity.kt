@@ -12,6 +12,7 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.constants.Constants
+import com.example.tdm_android.functions.messageShort
 import com.example.tdm_android.managers.UserManager
 import com.example.tdm_android.models.User
 import java.lang.Exception
@@ -36,11 +37,7 @@ class LoginActivity : AppCompatActivity() {
 
         val strName = intent.getStringExtra(Constants.STR_KEY_USERNAME)
         if (strName != null) { //Si se acaba de registrar
-            Toast.makeText(
-                this,
-                Constants.REGISTERED_SUCCESSFULLY_MESSAGE + strName,
-                Toast.LENGTH_SHORT
-            ).show()
+            messageShort(Constants.REGISTERED_SUCCESSFULLY_MESSAGE + strName)
         }
 
         initializeVariables()

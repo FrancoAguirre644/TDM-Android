@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.GravityCompat
 import android.content.Intent
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
@@ -14,6 +13,7 @@ import android.view.MenuItem
 import android.widget.*
 import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.constants.Constants
+import com.example.tdm_android.functions.messageShort
 import com.example.tdm_android.functions.triggerByChoosingNavigationMenuItem
 
 class FilterActivity : AppCompatActivity() {
@@ -54,7 +54,7 @@ class FilterActivity : AppCompatActivity() {
         val strName = intent.getStringExtra("name_user")
 
         if (strName != null) { // Si se acaba de loguear
-            Toast.makeText(this, "Welcome $strName!", Toast.LENGTH_SHORT).show()
+            messageShort("Welcome $strName!")
         }
 
         autoCompleteTxt = findViewById(R.id.auto_complete_txt)
@@ -64,7 +64,7 @@ class FilterActivity : AppCompatActivity() {
 
         autoCompleteTxt.setOnItemClickListener { parent, _, position, _ ->
             pageSize = parent.getItemAtPosition(position).toString()
-            Toast.makeText(applicationContext, "Item: $pageSize", Toast.LENGTH_SHORT).show()
+            messageShort("Item: $pageSize")
         }
 
         btnSubmit.setOnClickListener {

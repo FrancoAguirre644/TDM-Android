@@ -6,25 +6,20 @@ import android.os.Bundle
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.GravityCompat
-import android.content.Intent
 import android.util.Log
 import android.view.MenuItem
 import android.widget.*
 import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.client.RetroFitClient
 import com.example.tdm_android.constants.Constants
+import com.example.tdm_android.functions.messageShort
 import com.example.tdm_android.functions.triggerByChoosingNavigationMenuItem
-import com.example.tdm_android.models.Answer
 import com.example.tdm_android.models.Character
 import com.example.tdm_android.services.GOTService
-import com.example.tdm_android.services.YesNoService
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,7 +29,6 @@ class DetailActivity : AppCompatActivity() {
 
     lateinit var tvCharacterGender: TextView
     lateinit var tvCharacterName: TextView
-    lateinit var ivImagen: ImageView
     lateinit var cgtvSeries: ChipGroup
     lateinit var cgAliases: ChipGroup
 
@@ -74,7 +68,7 @@ class DetailActivity : AppCompatActivity() {
     private fun restApiConsumption() {
         lifecycleScope.launch(Dispatchers.IO) {
 
-            Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 77, DetailActivity)")
+            Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 71, DetailActivity)")
 
             val idCharacter = intent.getStringExtra("id")!!
 
@@ -103,7 +97,7 @@ class DetailActivity : AppCompatActivity() {
                         }
                     }
 
-                    Toast.makeText(this@DetailActivity, "Its a toast! $character", Toast.LENGTH_SHORT).show()
+                    messageShort("Its a toast! $character")
                 }
 
                 override fun onFailure(call: Call<Character>, t: Throwable) {

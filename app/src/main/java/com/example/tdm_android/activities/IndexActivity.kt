@@ -7,7 +7,6 @@ import android.os.Bundle
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.GravityCompat
 import android.content.Intent
 import android.util.Log
 import com.example.tdm_android.adapters.CharacterAdapter
@@ -58,12 +57,12 @@ class IndexActivity : AppCompatActivity() {
     private fun setupAdapter() {
         lifecycleScope.launch {
 
-            Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 86, IndexActivity)")
+            Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 60, IndexActivity)")
 
             withContext(Dispatchers.IO){
                 val api = RetroFitClient.retrofit.create(GOTService::class.java)
 
-                Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 91, IndexActivity)")
+                Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 65, IndexActivity)")
 
                 val pageSize = intent.getStringExtra("pageSize")!!
 

@@ -7,13 +7,11 @@ import android.os.Bundle
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.GravityCompat
 import android.content.Intent
 import com.example.tdm_android.adapters.CharacterAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import android.view.MenuItem
 import androidx.lifecycle.lifecycleScope
-import com.example.tdm_android.constants.Constants
 import com.example.tdm_android.functions.triggerByChoosingNavigationMenuItem
 import com.example.tdm_android.models.Character
 import java.util.ArrayList
