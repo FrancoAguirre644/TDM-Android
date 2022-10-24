@@ -28,7 +28,7 @@ class IndexActivity : AppCompatActivity() {
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
-    lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {

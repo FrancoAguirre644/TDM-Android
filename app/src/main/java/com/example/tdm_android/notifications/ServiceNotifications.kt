@@ -1,4 +1,4 @@
-package com.example.tdm_android.notificatios
+package com.example.tdm_android.notifications
 
 import android.app.*
 import android.content.Intent

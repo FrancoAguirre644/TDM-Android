@@ -12,6 +12,7 @@ import com.example.tdm_android.adapters.CharacterAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import android.view.MenuItem
 import androidx.lifecycle.lifecycleScope
+import com.example.tdm_android.functions.messageShort
 import com.example.tdm_android.functions.triggerByChoosingNavigationMenuItem
 import com.example.tdm_android.models.Character
 import java.util.ArrayList
@@ -20,7 +21,7 @@ class FavouritesActivity : AppCompatActivity() {
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
-    lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
@@ -47,6 +48,7 @@ class FavouritesActivity : AppCompatActivity() {
     private fun setupAdapter() {
         val rvCharacters = findViewById<RecyclerView>(R.id.listRecyclerView)
         val charactersAdapter = CharacterAdapter(characters) { character: Character? ->
+            messageShort(character.toString())
             val intent = Intent(this@FavouritesActivity, DetailActivity::class.java)
             startActivity(intent)
         }

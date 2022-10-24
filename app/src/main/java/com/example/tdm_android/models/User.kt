@@ -18,6 +18,7 @@ class User {
     var password: String? = null
 
     constructor() {}
+
     constructor(username: String?, email: String?, password: String?) {
         this.username = username
         this.email = email

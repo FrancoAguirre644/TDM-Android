@@ -47,7 +47,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".notificatios.ServiceNotifications" android:exported="false"/> <!-- Le damos categoria de servicio -->
+        <service android:name=".notifications.ServiceNotifications" android:exported="false"/> <!-- Le damos categoria de servicio -->
 
     </application>
 

@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.LifecycleCoroutineScope
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.tdm_android.R
 import com.example.tdm_android.activities.FavouritesActivity
@@ -33,8 +32,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-fun Context.messageShort(texto: String){ //A partir del context, es decir, se puede llamar desde cualquier lado
-    Toast.makeText(this, texto, Toast.LENGTH_SHORT).show()
+fun Context.messageShort(text: String){ //A partir del context, es decir, se puede llamar desde cualquier lado
+    Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 }
 
 
@@ -158,4 +157,4 @@ fun Context.logoutUser() {
 }
 
 //Función en una línea que, como es a partir del context, se puede usar desde cualquier lado
-fun Context.registrarPendiente(texto: String) = Log.i("TODO", texto)
+fun Context.registrarPendiente(text: String) = Log.i("TODO", text)
