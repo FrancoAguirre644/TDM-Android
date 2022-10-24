@@ -12,6 +12,7 @@ import android.util.Log
 import com.example.tdm_android.adapters.CharacterAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.client.RetroFitClient
 import com.example.tdm_android.constants.Constants
@@ -29,6 +30,7 @@ class IndexActivity : AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var tvDescriptionScreenIndex:  TextView
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
@@ -45,10 +47,12 @@ class IndexActivity : AppCompatActivity() {
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigationView)
+        tvDescriptionScreenIndex = findViewById(R.id.tvDescriptionScreenIndex)
         actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.menu_open, R.string.menu_close)
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        tvDescriptionScreenIndex.text = "List of characters - " + intent.getStringExtra("pageSize")!!
 
         triggerByChoosingNavigationMenuItem(lifecycleScope, navigationView, drawerLayout, Constants.STR_ORIGIN_INDEX)
 

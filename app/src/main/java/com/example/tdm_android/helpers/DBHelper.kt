@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
 import com.example.tdm_android.constants.Constants
+import com.example.tdm_android.models.FavouriteCharacter
 import com.example.tdm_android.models.User
 import java.sql.SQLException
 
@@ -14,6 +15,7 @@ class DBHelper(context: Context?) :
     override fun onCreate(database: SQLiteDatabase, connectionSource: ConnectionSource) {
         try {
             TableUtils.createTable(connectionSource, User::class.java)
+            TableUtils.createTable(connectionSource, FavouriteCharacter::class.java)
         } catch (e: SQLException) {
             e.printStackTrace()
         }
