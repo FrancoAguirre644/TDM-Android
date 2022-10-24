@@ -11,7 +11,7 @@
     tools:context=".activities.LoginActivity">
 
     <ImageView
-        android:id="@+id/character_image"
+        android:id="@+id/image_principal"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:src="@drawable/got"

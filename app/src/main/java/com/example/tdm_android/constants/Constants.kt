@@ -57,4 +57,13 @@ object Constants {
     const val STR_PASSWORD = "PASSWORD"
     const val STR_CHECK_REMEMBER_USER = "CHECK_REMEMBER_USER"
     const val STR_EMPTY = ""
+    const val LOGIN_STR = "Login"
+    const val LOGOUT_STR = "Logout"
+    const val YES_STR = "yes"
+    const val ORIGIN_STR = "origin"
+    const val IMAGE_STR = "image"
+    const val ANSWER_STR = "answer"
+    const val SHOW_GIF_STR = "show_gif"
+    const val STR_ORIGIN_DETAIL = "DetailActivity"
+    const val STR_ORIGIN_INDEX = "IndexActivity"
 }

@@ -6,13 +6,15 @@ import android.os.Bundle
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.GravityCompat
 import android.content.Intent
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.view.MenuItem
 import android.widget.*
+import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.constants.Constants
+import com.example.tdm_android.functions.messageShort
+import com.example.tdm_android.functions.triggerByChoosingNavigationMenuItem
 
 class FilterActivity : AppCompatActivity() {
 
@@ -47,37 +49,12 @@ class FilterActivity : AppCompatActivity() {
         actionBarDrawerToggle.syncState()
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        navigationView.setNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent = Intent(this@FilterActivity, FilterActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.nav_favourites -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent1 = Intent(this@FilterActivity, FavouritesActivity::class.java)
-                    startActivity(intent1)
-                }
-                R.id.nav_profile -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent2 = Intent(this@FilterActivity, ProfileActivity::class.java)
-                    startActivity(intent2)
-                }
-                R.id.nav_logout -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    logoutUser()
-                    val intent3 = Intent(this@FilterActivity, LoginActivity::class.java)
-                    startActivity(intent3)
-                }
-            }
-            true
-        }
+        triggerByChoosingNavigationMenuItem(lifecycleScope, navigationView, drawerLayout)
 
         val strName = intent.getStringExtra("name_user")
 
         if (strName != null) { // Si se acaba de loguear
-            Toast.makeText(this, "Welcome $strName!", Toast.LENGTH_SHORT).show()
+            messageShort("Welcome $strName!")
         }
 
         autoCompleteTxt = findViewById(R.id.auto_complete_txt)
@@ -87,7 +64,7 @@ class FilterActivity : AppCompatActivity() {
 
         autoCompleteTxt.setOnItemClickListener { parent, _, position, _ ->
             pageSize = parent.getItemAtPosition(position).toString()
-            Toast.makeText(applicationContext, "Item: $pageSize", Toast.LENGTH_SHORT).show()
+            messageShort("Item: $pageSize")
         }
 
         btnSubmit.setOnClickListener {

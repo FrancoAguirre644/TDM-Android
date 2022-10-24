@@ -9,10 +9,15 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.view.View
 import android.widget.*
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.constants.Constants
+import com.example.tdm_android.functions.messageShort
 import com.example.tdm_android.managers.UserManager
 import com.example.tdm_android.models.User
 import java.lang.Exception
+import com.example.tdm_android.functions.restApiYesNoConsumptionLogin
+import com.example.tdm_android.notificatios.ServiceNotifications
 
 class LoginActivity : AppCompatActivity() {
 
@@ -21,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var etPassword: EditText
     lateinit var btnLogin: Button
     lateinit var checkRememberUser: CheckBox
+    lateinit var imagePrincipal : ImageView
 
     lateinit var pref: SharedPreferences
     lateinit var editor: SharedPreferences.Editor
@@ -31,21 +37,18 @@ class LoginActivity : AppCompatActivity() {
 
         val strName = intent.getStringExtra(Constants.STR_KEY_USERNAME)
         if (strName != null) { //Si se acaba de registrar
-            Toast.makeText(
-                this,
-                Constants.REGISTERED_SUCCESSFULLY_MESSAGE + strName,
-                Toast.LENGTH_SHORT
-            ).show()
+            messageShort(Constants.REGISTERED_SUCCESSFULLY_MESSAGE + strName)
         }
 
         initializeVariables()
 
-        if (pref.getBoolean(
-                Constants.STR_CHECK_REMEMBER_USER,
-                false
-            )
-        ) { //Si había elegido recordar usuario
+        if ( pref.getBoolean(Constants.STR_CHECK_REMEMBER_USER, false) ) { //Si había elegido recordar usuario
             redirectToFilterActivity()
+        } else{
+            val origin = intent.getStringExtra("origin")
+            if (origin == null){ //Solo cuando ingresa
+                restApiYesNoConsumptionLogin(lifecycleScope, imagePrincipal, true)
+            }
         }
         tvCreateUser.setOnClickListener { redirectToCreateUser() }
         btnLogin.setOnClickListener { login() }
@@ -104,6 +107,7 @@ class LoginActivity : AppCompatActivity() {
         checkRememberUser = findViewById(R.id.checkRememberUser)
         pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         editor = pref.edit()
+        imagePrincipal = findViewById(R.id.image_principal)
     }
 
     private fun saveDataUser(isRememberUser: Boolean) {
@@ -111,5 +115,12 @@ class LoginActivity : AppCompatActivity() {
         editor.putString(Constants.STR_PASSWORD, etPassword.text.toString())
         editor.putBoolean(Constants.STR_CHECK_REMEMBER_USER, isRememberUser)
         editor.apply()
+        createNotification()
     }
+
+    private fun createNotification(){
+        val intent = Intent(this, ServiceNotifications::class.java)
+        ContextCompat.startForegroundService(this, intent)
+    }
+
 }

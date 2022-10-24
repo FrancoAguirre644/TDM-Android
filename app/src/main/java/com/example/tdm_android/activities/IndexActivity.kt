@@ -7,7 +7,6 @@ import android.os.Bundle
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.GravityCompat
 import android.content.Intent
 import android.util.Log
 import com.example.tdm_android.adapters.CharacterAdapter
@@ -15,6 +14,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import android.view.MenuItem
 import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.client.RetroFitClient
+import com.example.tdm_android.constants.Constants
+import com.example.tdm_android.functions.triggerByChoosingNavigationMenuItem
 import com.example.tdm_android.models.Character
 import com.example.tdm_android.services.GOTService
 import kotlinx.coroutines.Dispatchers
@@ -49,46 +50,19 @@ class IndexActivity : AppCompatActivity() {
         actionBarDrawerToggle.syncState()
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        navigationView.setNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent = Intent(this@IndexActivity, FilterActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.nav_favourites -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent1 = Intent(this@IndexActivity, FavouritesActivity::class.java)
-                    startActivity(intent1)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent2 = Intent(this@IndexActivity, ProfileActivity::class.java)
-                    startActivity(intent2)
-                }
-                R.id.nav_profile -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent2 = Intent(this@IndexActivity, ProfileActivity::class.java)
-                    startActivity(intent2)
-                }
-                R.id.nav_logout -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent3 = Intent(this@IndexActivity, LoginActivity::class.java)
-                    startActivity(intent3)
-                }
-            }
-            true
-        }
+        triggerByChoosingNavigationMenuItem(lifecycleScope, navigationView, drawerLayout, Constants.STR_ORIGIN_INDEX)
 
     }
 
     private fun setupAdapter() {
         lifecycleScope.launch {
 
-            Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 86, IndexActivity)")
+            Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 60, IndexActivity)")
 
             withContext(Dispatchers.IO){
                 val api = RetroFitClient.retrofit.create(GOTService::class.java)
 
-                Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 91, IndexActivity)")
+                Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 65, IndexActivity)")
 
                 val pageSize = intent.getStringExtra("pageSize")!!
 

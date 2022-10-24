@@ -6,20 +6,20 @@ import android.os.Bundle
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.GravityCompat
-import android.content.Intent
 import android.util.Log
 import android.view.MenuItem
 import android.widget.*
 import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.client.RetroFitClient
+import com.example.tdm_android.constants.Constants
+import com.example.tdm_android.functions.messageShort
+import com.example.tdm_android.functions.triggerByChoosingNavigationMenuItem
 import com.example.tdm_android.models.Character
 import com.example.tdm_android.services.GOTService
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -58,50 +58,23 @@ class DetailActivity : AppCompatActivity() {
         cgtvSeries = findViewById(R.id.cgTvSeries)
         cgAliases = findViewById(R.id.cgAliases)
 
-        Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 61, DetailActivity)")
+        Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 67, DetailActivity)")
 
         restApiConsumption()
 
-        navigationView.setNavigationItemSelectedListener { item: MenuItem ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent = Intent(this@DetailActivity, FilterActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.nav_favourites -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent1 = Intent(this@DetailActivity, FavouritesActivity::class.java)
-                    startActivity(intent1)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent2 = Intent(this@DetailActivity, ProfileActivity::class.java)
-                    startActivity(intent2)
-                }
-                R.id.nav_profile -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent2 = Intent(this@DetailActivity, ProfileActivity::class.java)
-                    startActivity(intent2)
-                }
-                R.id.nav_logout -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent3 = Intent(this@DetailActivity, LoginActivity::class.java)
-                    startActivity(intent3)
-                }
-            }
-            true
-        }
+        triggerByChoosingNavigationMenuItem(lifecycleScope, navigationView, drawerLayout, Constants.STR_ORIGIN_DETAIL)
     }
 
     private fun restApiConsumption() {
         lifecycleScope.launch(Dispatchers.IO) {
 
-            Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 98, DetailActivity)")
+            Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 71, DetailActivity)")
 
             val idCharacter = intent.getStringExtra("id")!!
 
-            val api = RetroFitClient.retrofit.create(GOTService::class.java)
+            val apiGOT = RetroFitClient.retrofit.create(GOTService::class.java)
 
-            api.getCharacter(idCharacter).enqueue(object : Callback<Character> {
+            apiGOT.getCharacter(idCharacter).enqueue(object : Callback<Character> {
                 override fun onResponse(call: Call<Character>, response: Response<Character>) {
                     val character = response.body() as Character
 
@@ -124,8 +97,7 @@ class DetailActivity : AppCompatActivity() {
                         }
                     }
 
-                    Toast.makeText(this@DetailActivity, "Its a toast! $character", Toast.LENGTH_SHORT)
-                        .show()
+                    messageShort("Its a toast! $character")
                 }
 
                 override fun onFailure(call: Call<Character>, t: Throwable) {
@@ -133,6 +105,7 @@ class DetailActivity : AppCompatActivity() {
                 }
 
             })
+
         }
     }
 
