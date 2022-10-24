@@ -54,7 +54,7 @@ class IndexActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         tvDescriptionScreenIndex.text = "List of characters - " + intent.getStringExtra("pageSize")!!
 
-        triggerByChoosingNavigationMenuItem(lifecycleScope, navigationView, drawerLayout, Constants.STR_ORIGIN_INDEX)
+        triggerByChoosingNavigationMenuItem(lifecycleScope, navigationView, drawerLayout)
 
     }
 

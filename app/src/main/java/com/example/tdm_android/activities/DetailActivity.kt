@@ -102,7 +102,7 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
-        triggerByChoosingNavigationMenuItem(lifecycleScope, navigationView, drawerLayout, Constants.STR_ORIGIN_DETAIL)
+        triggerByChoosingNavigationMenuItem(lifecycleScope, navigationView, drawerLayout)
     }
 
     private fun restApiConsumption() {

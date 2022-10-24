@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.content.Intent
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
@@ -47,6 +48,7 @@ class LoginActivity : AppCompatActivity() {
         } else{
             val origin = intent.getStringExtra("origin")
             if (origin == null){ //Solo cuando ingresa
+                Log.e("LOG-THREAD", Thread.currentThread().name+" (Log.e on line 51, LoginActivity)")
                 restApiYesNoConsumptionLogin(lifecycleScope, imagePrincipal, true)
             }
         }
@@ -115,7 +117,7 @@ class LoginActivity : AppCompatActivity() {
         editor.putString(Constants.STR_PASSWORD, etPassword.text.toString())
         editor.putBoolean(Constants.STR_CHECK_REMEMBER_USER, isRememberUser)
         editor.apply()
-        createNotification()
+        if(isRememberUser) { createNotification() }
     }
 
     private fun createNotification(){

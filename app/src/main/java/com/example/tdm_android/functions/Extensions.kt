@@ -57,9 +57,10 @@ fun Context.redirectToSplashScreenActivity(answer: Answer, origin: String, showG
 }
 
 fun Context.restApiYesNoConsumptionLogin(lifecycleScope: LifecycleCoroutineScope, imagePrincipal: ImageView, showGif: Boolean) {
+
     lifecycleScope.launch(Dispatchers.IO) {
 
-        Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 50, Extensions)")
+        Log.e("LOG-THREAD", Thread.currentThread().name+" (Log.e on line 50, Extensions)")
 
         val apiYesNo = RetroFitClient.retrofit.create(YesNoService::class.java)
 
@@ -87,7 +88,7 @@ fun Context.restApiYesNoConsumptionLogin(lifecycleScope: LifecycleCoroutineScope
 fun Context.restApiYesNoConsumptionLogout(lifecycleScope: LifecycleCoroutineScope, showGif: Boolean) {
     lifecycleScope.launch(Dispatchers.IO) {
 
-        Log.e("THREAD", Thread.currentThread().name+" (Log.e on line 50, Extensions)")
+        Log.e("LOG-THREAD", Thread.currentThread().name+" (Log.e on line 50, Extensions)")
 
         val apiYesNo = RetroFitClient.retrofit.create(YesNoService::class.java)
 
@@ -114,7 +115,7 @@ fun Context.restApiYesNoConsumptionLogout(lifecycleScope: LifecycleCoroutineScop
     }
 }
 
-fun Context.triggerByChoosingNavigationMenuItem(lifecycleScope: LifecycleCoroutineScope, navigationView: NavigationView, drawerLayout: DrawerLayout, origin: String="Parameter optional if the origin is not DetailActivity or IndexActivity") {
+fun Context.triggerByChoosingNavigationMenuItem(lifecycleScope: LifecycleCoroutineScope, navigationView: NavigationView, drawerLayout: DrawerLayout) {
 
     navigationView.setNavigationItemSelectedListener { item: MenuItem ->
         when (item.itemId) {
@@ -125,13 +126,8 @@ fun Context.triggerByChoosingNavigationMenuItem(lifecycleScope: LifecycleCorouti
             }
             R.id.nav_favourites -> {
                 drawerLayout.closeDrawer(GravityCompat.START)
-                val intent1 = Intent(this, FavouritesActivity::class.java)
-                startActivity(intent1)
-                if (origin == Constants.STR_ORIGIN_DETAIL || origin == Constants.STR_ORIGIN_INDEX){
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    val intent2 = Intent(this, ProfileActivity::class.java)
-                    startActivity(intent2)
-                }
+                val intent = Intent(this, FavouritesActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_profile -> {
                 drawerLayout.closeDrawer(GravityCompat.START)
@@ -139,6 +135,7 @@ fun Context.triggerByChoosingNavigationMenuItem(lifecycleScope: LifecycleCorouti
                 startActivity(intent)
             }
             R.id.nav_logout -> {
+                Log.e("LOG-THREAD", Thread.currentThread().name+" (Log.e on line 138, Extensions)")
                 logoutUser()
                 restApiYesNoConsumptionLogout(lifecycleScope, true)
             }

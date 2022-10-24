@@ -15,7 +15,6 @@ import android.view.View
 import android.widget.*
 import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.constants.Constants
-import com.example.tdm_android.functions.messageShort
 import com.example.tdm_android.functions.triggerByChoosingNavigationMenuItem
 import com.example.tdm_android.managers.UserManager
 import com.example.tdm_android.models.User
@@ -102,8 +101,6 @@ class ProfileActivity : AppCompatActivity() {
     private fun updateUser(user: User?) {
 
         userDetails.username = (etUsername.text.toString())
-
-        messageShort(etUsername.text.toString())
         tvUsername.text = etUsername.text.toString()
         editor.putString(Constants.STR_USERNAME, etUsername.text.toString())
         editor.apply()
