@@ -13,7 +13,7 @@ import com.example.tdm_android.functions.showImageRestApiYesNo
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    lateinit var ivImage: ImageView
+    private lateinit var ivImage: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,10 +29,10 @@ class SplashScreenActivity : AppCompatActivity() {
 
         showImageRestApiYesNo(answer, image, ivImage, showGif.toBoolean())
 
-        delayAndRedirectToLogin(8000)
+        delayAndRedirectToLogin()
     }
 
-    private fun delayAndRedirectToLogin(delayMillis: Long){
+    private fun delayAndRedirectToLogin(delayMillis: Long = 8000){
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
             intent.putExtra(Constants.ORIGIN_STR, "SplashScreen")

@@ -14,12 +14,12 @@ import java.lang.Exception
 
 class RegisterActivity : AppCompatActivity() {
 
-    lateinit var tvLogin: TextView
-    lateinit var btnRegister: Button
-    lateinit var etUsername: EditText
-    lateinit var etEmail: EditText
-    lateinit var etPassword: EditText
-    lateinit var etConfirmPassword: EditText
+    private lateinit var tvLogin: TextView
+    private lateinit var btnRegister: Button
+    private lateinit var etUsername: EditText
+    private lateinit var etEmail: EditText
+    private lateinit var etPassword: EditText
+    private lateinit var etConfirmPassword: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,13 +41,13 @@ class RegisterActivity : AppCompatActivity() {
         val strUsername: String = etUsername.text.toString()
         val strPassword: String = etPassword.text.toString()
         val strEmail: String = etEmail.text.toString()
-        if (isFieldsAreCorrect_or_returnsFalseAndMessage(strUsername, strPassword, strEmail)) {
+        if (isFieldsAreCorrectOrReturnsFalseAndMessage(strUsername, strPassword, strEmail)) {
             createUser(strUsername, strEmail, strPassword)
             redirectToLogin(strUsername, true)
         }
     }
 
-    private fun isFieldsAreCorrect_or_returnsFalseAndMessage(
+    private fun isFieldsAreCorrectOrReturnsFalseAndMessage(
         strUsername: String,
         strPassword: String,
         strEmail: String

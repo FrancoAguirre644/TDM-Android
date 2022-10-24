@@ -17,19 +17,19 @@ import com.example.tdm_android.managers.UserManager
 import com.example.tdm_android.models.User
 import java.lang.Exception
 import com.example.tdm_android.functions.restApiYesNoConsumptionLogin
-import com.example.tdm_android.notificatios.ServiceNotifications
+import com.example.tdm_android.notifications.ServiceNotifications
 
 class LoginActivity : AppCompatActivity() {
 
-    lateinit var tvCreateUser: TextView
-    lateinit var etUsername: EditText
-    lateinit var etPassword: EditText
-    lateinit var btnLogin: Button
-    lateinit var checkRememberUser: CheckBox
-    lateinit var imagePrincipal : ImageView
+    private lateinit var tvCreateUser: TextView
+    private lateinit var etUsername: EditText
+    private lateinit var etPassword: EditText
+    private lateinit var btnLogin: Button
+    private lateinit var checkRememberUser: CheckBox
+    private lateinit var imagePrincipal : ImageView
 
-    lateinit var pref: SharedPreferences
-    lateinit var editor: SharedPreferences.Editor
+    private lateinit var pref: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -7,12 +7,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.content.Intent
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import android.view.MenuItem
 import android.widget.*
 import androidx.lifecycle.lifecycleScope
-import com.example.tdm_android.constants.Constants
 import com.example.tdm_android.functions.messageShort
 import com.example.tdm_android.functions.triggerByChoosingNavigationMenuItem
 
@@ -27,10 +24,7 @@ class FilterActivity : AppCompatActivity() {
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
-    lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-
-    private lateinit var pref: SharedPreferences
-    private lateinit var editor: SharedPreferences.Editor
+    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
@@ -64,7 +58,6 @@ class FilterActivity : AppCompatActivity() {
 
         autoCompleteTxt.setOnItemClickListener { parent, _, position, _ ->
             pageSize = parent.getItemAtPosition(position).toString()
-            messageShort("Item: $pageSize")
         }
 
         btnSubmit.setOnClickListener {
@@ -75,12 +68,4 @@ class FilterActivity : AppCompatActivity() {
         }
     }
 
-    private fun logoutUser() {
-        pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        editor = pref.edit()
-        editor.putString(Constants.STR_USERNAME, "")
-        editor.putString(Constants.STR_PASSWORD, "")
-        editor.putBoolean(Constants.STR_CHECK_REMEMBER_USER, false)
-        editor.apply()
-    }
 }

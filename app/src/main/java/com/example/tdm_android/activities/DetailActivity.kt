@@ -12,7 +12,6 @@ import android.widget.*
 import androidx.lifecycle.lifecycleScope
 import com.example.tdm_android.client.RetroFitClient
 import com.example.tdm_android.constants.Constants
-import com.example.tdm_android.functions.messageShort
 import com.example.tdm_android.functions.triggerByChoosingNavigationMenuItem
 import com.example.tdm_android.models.Character
 import com.example.tdm_android.services.GOTService
@@ -34,7 +33,7 @@ class DetailActivity : AppCompatActivity() {
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
-    lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
@@ -97,7 +96,6 @@ class DetailActivity : AppCompatActivity() {
                         }
                     }
 
-                    messageShort("Its a toast! $character")
                 }
 
                 override fun onFailure(call: Call<Character>, t: Throwable) {

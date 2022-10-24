@@ -25,19 +25,19 @@ class ProfileActivity : AppCompatActivity() {
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
-    lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
-    lateinit var tvUsername: TextView
-    lateinit var tvEmail: TextView
-    lateinit var etUsername: EditText
-    lateinit var etEmail: EditText
-    lateinit var etFullname: EditText
-    lateinit var btnUpdateProfile: Button
-    lateinit var btnLogout: Button
+    private lateinit var tvUsername: TextView
+    private lateinit var tvEmail: TextView
+    private lateinit var etUsername: EditText
+    private lateinit var etEmail: EditText
+    private lateinit var etFullname: EditText
+    private lateinit var btnUpdateProfile: Button
+    private lateinit var btnLogout: Button
 
-    lateinit var userDetails: User
-    lateinit var pref: SharedPreferences
-    lateinit var editor: SharedPreferences.Editor
+    private lateinit var userDetails: User
+    private lateinit var pref: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
